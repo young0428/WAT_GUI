@@ -37,15 +37,46 @@ namespace WAT
         public double[] data_right_vertical = new double[buffsize];
         public double[] data_horizontal = new double[buffsize];
 
+        double left_vertical_min, left_vertical_max;
+        double[] calibration_data_left_vertical = new double[buffsize];
+        double[] calibration_data_right_vertical = new double[buffsize];
+        double[] calibration_data_horizontal = new double[buffsize];
+
+        static int realtime_data_buffsize = 100;
+        double[] realtime_data_buffer_left_vertical = new double[realtime_data_buffsize];
+        double[] realtime_data_buffer_right_vertical = new double[realtime_data_buffsize];
+        double[] realtime_data_buffer_horizontal = new double[realtime_data_buffsize];
+        double[] realtime_diff_data_buffer_left_vertical = new double[realtime_data_buffsize];
+        double[] realtime_diff_data_buffer_right_vertical = new double[realtime_data_buffsize];
+        double[] realtime_diff_data_buffer_horizontal = new double[realtime_data_buffsize];
+
+        SignalProcess signal_processor;
+
         public double[] input_Draw_1 = new double[buffsize];
         public double[] input_Draw_2 = new double[buffsize];
         public double[] input_Draw_3 = new double[buffsize];
 
-        public int start_byte = 0;
-        public int start_flag = 0;
-        public int data_count = 0;
-        public int Data_1, Data_2, Data_3;
-        public int count = 0;
+        int lag = 40;
+        double threshold = 2.8;
+        double influence = 0.08;
+
+        short calibration_start_flag = 0;
+        short start_flag = 0;
+        int start_byte = 0;
+        int data_count = 0;
+        int cali_top = 0;
+        int Data_1, Data_2, Data_3;
+        int sampling_rate = 100;
+        int game_start_flag = 0;
+        int count = 0;
+        double delay = 0.2; // sec
+        static int delay_idx = (int)(0.3 * 100);
+
+        double vertical_peak_max, vertical_peak_min;
+        double horizontal_peak_max, horizontal_peak_min;
+        double threshold_ratio = 0.7;
+        double second_threshold_ratio = 0.2;
+        double baseline_ratio = 0.2;
 
         public struct EOG_position
         {
@@ -169,8 +200,7 @@ namespace WAT
 
         private void timer1_stop(object sender, EventArgs e)
         {
-            
-           
+
             timer5.Enabled = false;
             timer5.Stop();
 
@@ -180,6 +210,18 @@ namespace WAT
             timer2.Enabled = false;
             timer2.Stop();
             //sPort.Close();
+
+            signal_processor = new SignalProcess(calibration_data_right_vertical);
+          
+            double[] vertical_diff_result = signal_processor.Differential();
+            double[] filtered_vertical_diff_signal = signal_processor.ButterworthHighpassLowpassFilter(vertical_diff_result, sampling_rate, 0.1, 1000, 2);
+            double[] peak_detection_result, filtered_y;
+            (peak_detection_result, filtered_y) = signal_processor.FindPeaks(filtered_vertical_diff_signal, lag, threshold, influence);
+            (vertical_peak_max, vertical_peak_min) = signal_processor.PeakMinMax(filtered_vertical_diff_signal, peak_detection_result, lag);
+            int[] blink_detection_result = signal_processor.BlinkDetection(filtered_vertical_diff_signal, vertical_peak_max, vertical_peak_min);
+
+
+
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -222,70 +264,97 @@ namespace WAT
                         count = 0;
                     }
                 }
+                //////////////////////// for Test ////////////////////////
 
-                if (start_byte == 0x81)
+                //if (start_byte == 0x81)
+                //{
+                //    start_flag = 1;
+                //    data_buff[data_count] = sPort.ReadByte();
+
+                //    data_count++;
+
+                //    if (data_count == 4)
+                //    {
+                //        Data_1 = ((data_buff[0] & 0x7f) << 7) + (data_buff[1] & 0x7f);
+                //        Data_2 = ((data_buff[2] & 0x7f) << 7) + (data_buff[3] & 0x7f);
+
+                //        start_flag = 2;
+                //        data_count = 0;
+                //    }
+
+                //    if (start_flag == 2)
+                //    {
+                //        Data_1 -= 7000;
+                //        Data_2 -= 7000;
+                        
+                //        for (int i = 0; i < buffsize - 1; i++)
+                //        {
+                //            data_right_vertical[i] = data_right_vertical[i + 1];
+                //            data_horizontal[i] = data_horizontal[i + 1];
+                //        }
+
+                //        data_right_vertical[buffsize - 1] = Data_1;
+                //        input_Draw_1 = data_right_vertical;
+
+                //        data_horizontal[buffsize - 1] = Data_2;
+                //        input_Draw_2 = data_horizontal;
+
+                //        EOG_position Calibration_Data = new EOG_position
+                //        {
+                //            x = X,
+                //            y = Y,
+                //            EOG_right_vertical = Data_1,
+                //            EOG_horizontal = Data_2
+                //        };
+
+                //        Cal_data[count] = Calibration_Data;
+
+                //        count++;
+
+                //        start_flag = 0;
+                //    }
+                //}
+
+                ///////////////////////////////////////////////////////////////
+                if (start_byte == 0x81 && calibration_start_flag == 1)
                 {
                     start_flag = 1;
                     data_buff[data_count] = sPort.ReadByte();
 
                     data_count++;
 
-                    if (data_count == 5)
+                    if (data_count == 4)
                     {
                         Data_1 = ((data_buff[0] & 0x7f) << 7) + (data_buff[1] & 0x7f);
                         Data_2 = ((data_buff[2] & 0x7f) << 7) + (data_buff[3] & 0x7f);
-                        Data_3 = ((data_buff[4] & 0x7f) << 7) + (data_buff[5] & 0x7f);
+                        //Data_3 = ((data_buff[4] & 0x7f) << 7) + (data_buff[5] & 0x7f);
 
                         start_flag = 2;
                         data_count = 0;
                     }
 
 
-                    if (start_flag == 2)
+                    if (start_flag == 2 )
                     {
                         Data_1 -= 7000;
                         Data_2 -= 7000;
-                        Data_3 -= 7000;
-                        for ( int i = 0; i < buffsize - 1; i++)
-                        {
-                            data_left_vertical[i] = data_left_vertical[i + 1];
-                            data_right_vertical[i] = data_right_vertical[i + 1];
-                            data_horizontal[i] = data_horizontal[i + 1];
-                        }
-
-                        data_left_vertical[buffsize - 1] = Data_1;
-                        input_Draw_1 = data_left_vertical;
-
-                        data_right_vertical[buffsize - 1] = Data_2;
-                        input_Draw_2 = data_right_vertical;
-
-                        data_horizontal[buffsize - 1] = Data_3 ;
-                        input_Draw_3 = data_horizontal;
+                        
+                        calibration_data_right_vertical[cali_top] = Data_1;
+                        calibration_data_horizontal[cali_top] = Data_2;
+                        cali_top++;
 
                         EOG_position Calibration_Data = new EOG_position
                         {
                             x = X,
                             y = Y,
-                            EOG_left_vertical = Data_1,
-                            EOG_right_vertical = Data_2,
-                            EOG_horizontal = Data_3
+                            EOG_right_vertical = Data_1,
+                            EOG_horizontal = Data_2
                         };
 
                         Cal_data[count] = Calibration_Data;
-                        Console.Write(Cal_data[count].EOG_right_vertical);
-                        Console.Write("  ");
-                        Console.Write(Cal_data[count].EOG_left_vertical);
-                        Console.Write("  ");
-                        Console.Write(Cal_data[count].EOG_horizontal);
-                        Console.Write("  ");
-                        Console.Write(Cal_data[count].x);
-                        Console.Write("  ");
-                        Console.WriteLine(Cal_data[count].y);
-                       
-
                         count++;
-
                         start_flag = 0;
+
                     }
                 }
 
@@ -295,7 +364,6 @@ namespace WAT
 
         private void On_timer(object sender, EventArgs e)
         {
-            scope1.Channels[0].Data.SetYData(data_left_vertical);
             scope2.Channels[0].Data.SetYData(data_right_vertical);
             scope3.Channels[0].Data.SetYData(data_horizontal);
         }
@@ -303,7 +371,7 @@ namespace WAT
         private void Calibration2_Timer(object sender, EventArgs e)
         {
             
-            int red = Convert.ToInt16(cnt%3==0)*255;
+            int red = Convert.ToInt16(cnt%3 == 0)*255;
             int green = Convert.ToInt16(cnt % 3 == 1) * 255;
             int blue = Convert.ToInt16(cnt % 3 == 2) * 255;
 
