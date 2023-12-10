@@ -22,8 +22,8 @@ namespace WAT
     }
     public class SignalProcess
     {
-        public double[] origin_signal;
-        public double[] diff_signal;
+        public double[] signal;
+        public double[] diff_signal_1;
         public double[] second_diff_signal;
         public double upper_threshold;
         public double lower_threshold;
@@ -40,8 +40,8 @@ namespace WAT
 
         public SignalProcess(double[] input)
         {
-            origin_signal = new double[input.Length];
-            Array.Copy(input, origin_signal, input.Length);
+            signal = new double[input.Length];
+            Array.Copy(input, signal, input.Length);
         }
 
         public double CalculateGazePosition(double currentEog, double topEog, double bottomEog)
@@ -55,28 +55,28 @@ namespace WAT
         }
 
         // 1차 미분 계산
-        public double[] Differential()
+        public double[] Differential(double[] signal)
         {
-            int length = origin_signal.Length;
-            diff_signal = new double[length - 1];
+            int length = signal.Length;
+            double[] diff_signal_1 = new double[length - 1];
 
             for (int i = 1; i < length; i++)
             {
-                diff_signal[i - 1] = origin_signal[i] - origin_signal[i - 1];
+                diff_signal_1[i - 1] = signal[i] - signal[i - 1];
             }
 
-            return diff_signal;
+            return diff_signal_1;
         }
 
         // 2차 미분 계산
         public double[] SecondDiff()
         {
-            int length = origin_signal.Length;
+            int length = signal.Length;
             second_diff_signal = new double[length - 2];
 
             for (int i = 1; i < length - 1; i++)
             {
-                second_diff_signal[i - 1] = origin_signal[i + 1] - 2 * origin_signal[i] + origin_signal[i - 1];
+                second_diff_signal[i - 1] = signal[i + 1] - 2 * signal[i] + signal[i - 1];
             }
 
             return second_diff_signal;
@@ -454,11 +454,11 @@ namespace WAT
             return signal;
         }
 
-        public int CheckCrossThreshold(double diff_value)
+        public int CheckCrossThreshold(double diff_value, double upper_threshold, double lower_threshold)
         {
             // upper를 넘으면 1 , blink 인지 움직임인지 파악
-            if (diff_value > this.upper_baseline_threshold) return 1;
-            if (diff_value < this.lower_baseline_threshold) return 2;
+            if (diff_value > upper_threshold) return 1;
+            if (diff_value < lower_threshold) return 2;
             return 0;
         }
         public double[] IntegrateSignalWithPeak(double[] originalSignal, double initialValue, double[] derivativeArray, int[] peakArray)
@@ -490,21 +490,15 @@ namespace WAT
     // EOG 미분 값 4개 받아서 평균 낸 뒤 입력 값으로 사용
     class NonlinearRegression
     {
-        static void training()
+        public void training(double[] eogDeltaValues, double[] trueDeltaValues)
         {
             // 학습 데이터 생성
-            double[] eogDeltaValues = { 1.0, 2.0, 3.0, 4.0, 5.0 };
-            double[] trueDeltaValues = { 2.0, 4.0, 5.0, 5.5, 6.0 };
 
             // 모델 학습
             TrainModel(eogDeltaValues, trueDeltaValues);
-
-            // 새로운 입력에 대한 예측
-            double newInput = 3.5;
-            double predictedDelta = PredictDelta(newInput);
-
-            Console.WriteLine($"Predicted Delta for {newInput}: {predictedDelta}");
         }
+
+
 
         // 모델 파라미터
         static double weight1 = 0.5;
@@ -521,13 +515,13 @@ namespace WAT
         }
 
         // 모델 학습 함수
-        static void TrainModel(double[] inputs, double[] targets, int epochs = 1000)
+        public void TrainModel(double[] inputs, double[] targets, int epochs = 1000)
         {
             for (int epoch = 0; epoch < epochs; epoch++)
             {
                 for (int i = 0; i < inputs.Length; i++)
                 {
-                    double prediction = PredictDelta(inputs[i]);
+                    double prediction = predict(inputs[i]);
                     double error = prediction - targets[i];
 
                     // 경사 하강법을 사용하여 가중치 업데이트
@@ -539,7 +533,7 @@ namespace WAT
         }
 
         // 새로운 입력에 대한 예측 함수
-        static double PredictDelta(double input)
+        public double predict(double input)
         {
             return weight1 * NonlinearTransformation(input) + weight2 * input + weight3;
         }

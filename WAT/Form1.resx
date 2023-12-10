@@ -117,14 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="vclPen1.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen127.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="vclPen2.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen128.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
@@ -139,77 +139,77 @@
         Y2l0SGVpZ2h0AxgBCw==
 </value>
   </data>
-  <data name="scopeLegendView1.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="scopeLegendView22.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgDAAAAAwAAAAs=
 </value>
   </data>
-  <data name="displayTitle1.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="displayTitle22.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgAAAAAAAAAAAs=
 </value>
   </data>
-  <data name="toolBarPosition1.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="toolBarPosition22.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAwAAAAgDAAAAAAAAAAMAAAAL
 </value>
   </data>
-  <data name="vclPen3.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen129.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="vclPen4.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen130.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="scopeXAxis1.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="scopeXAxis22.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAABAAAAAgAAAAAAAAAAAEAAAABAAAACw==
 </value>
   </data>
-  <data name="vclPen5.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen131.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="vclPen6.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen132.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="scopeYAxis1.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="scopeYAxis22.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAwAAAAgAAAAAAgAAAAIAAAAL
 </value>
   </data>
-  <data name="vclPen7.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen133.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="vclPen8.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen134.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
@@ -224,77 +224,77 @@
         Y2l0SGVpZ2h0AxgBCw==
 </value>
   </data>
-  <data name="scopeLegendView2.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="scopeLegendView23.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgDAAAAAwAAAAs=
 </value>
   </data>
-  <data name="displayTitle2.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="displayTitle23.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgAAAAAAAAAAAs=
 </value>
   </data>
-  <data name="toolBarPosition2.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="toolBarPosition23.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAwAAAAgDAAAAAAAAAAMAAAAL
 </value>
   </data>
-  <data name="vclPen9.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen135.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="vclPen10.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen136.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="scopeXAxis2.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="scopeXAxis23.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAABAAAAAgAAAAAAAAAAAEAAAABAAAACw==
 </value>
   </data>
-  <data name="vclPen11.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen137.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="vclPen12.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen138.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="scopeYAxis2.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="scopeYAxis23.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAwAAAAgAAAAAAgAAAAIAAAAL
 </value>
   </data>
-  <data name="vclPen13.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen139.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="vclPen14.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen140.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
@@ -309,63 +309,63 @@
         Y2l0SGVpZ2h0AxgBCw==
 </value>
   </data>
-  <data name="scopeLegendView3.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="scopeLegendView24.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgDAAAAAwAAAAs=
 </value>
   </data>
-  <data name="displayTitle3.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="displayTitle24.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgAAAAAAAAAAAs=
 </value>
   </data>
-  <data name="toolBarPosition3.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="toolBarPosition24.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAwAAAAgDAAAAAAAAAAMAAAAL
 </value>
   </data>
-  <data name="vclPen15.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen141.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="vclPen16.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen142.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="scopeXAxis3.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="scopeXAxis24.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAABAAAAAgAAAAAAAAAAAEAAAABAAAACw==
 </value>
   </data>
-  <data name="vclPen17.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen143.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="vclPen18.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="vclPen144.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
         YXJ5RGF0YQEAAAAFRW51bXMHCAIAAAAJAwAAAA8DAAAAAgAAAAgEAAAAAAAAAAs=
 </value>
   </data>
-  <data name="scopeYAxis3.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
+  <data name="scopeYAxis24.InternalData" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFFNaXRvdi5CYXNpY0xhYiwgVmVyc2lvbj04LjAuMC4xLCBDdWx0
         dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTU0YjhhMWYzOGM5NDIyMWEFAQAAABFWY2wuVmNsQmlu
