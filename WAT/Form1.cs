@@ -15,6 +15,7 @@ using System.IO.Ports;
 using System.IO;
 using System.Security.AccessControl;
 
+
 namespace WAT
 {
     public partial class WAT : Form
@@ -42,14 +43,14 @@ namespace WAT
         int data_count = 0;
         int cali_top = 0;
         int Data_1, Data_2, Data_3;
-        int sampling_rate = 50;
+        int sampling_rate = 100;
         int game_start_flag = 0;
         int count = 0;
         double delay = 0.2; // sec
-        static int delay_idx = (int)(0.3 * 100);
+        static int delay_idx = (int)(0.2 * 50);
 
         public int[] data_buff = new int[1200];
-        public static int buffsize = 1200;
+        public static int buffsize = 12*4*100;
         public double[] data_left_vertical = new double[buffsize];
         public double[] data_right_vertical = new double[buffsize];
         public double[] data_horizontal = new double[buffsize];
@@ -58,13 +59,16 @@ namespace WAT
         double[] calibration_data_horizontal = new double[buffsize];
         double[] saccade_calibration_data_right_vertical = new double[buffsize];
         double[] saccade_calibration_data_horizontal= new double[buffsize];
-        static int realtime_data_buffsize = 100;
+        static int realtime_data_buffsize = 300;
         double[] realtime_data_buffer_left_vertical = new double[realtime_data_buffsize];
         double[] realtime_data_buffer_right_vertical = new double[realtime_data_buffsize];
         double[] realtime_data_buffer_horizontal = new double[realtime_data_buffsize];
         double[] realtime_diff_data_buffer_left_vertical = new double[realtime_data_buffsize];
         double[] realtime_diff_data_buffer_right_vertical = new double[realtime_data_buffsize];
         double[] realtime_diff_data_buffer_horizontal = new double[realtime_data_buffsize];
+
+        Queue<int> pos_delta_queue_x = new Queue<int>();
+        Queue<int> pos_delta_queue_y = new Queue<int>();
 
         int saccade_top = 0;
         
@@ -173,22 +177,23 @@ namespace WAT
             // game Start
             if (flag == 3)
             {
-                trackingbox.BackColor = Color.Black;
+                trackingbox.BackColor = Color.White;
                 trackingbox.Location = new Point(max_x / 2, max_y / 2);
                 trackingbox.Size = new Size(30, 30);
                 trackingbox.Visible = true;
 
-                Tablepanel.Visible = false;
+                Tablepanel.Visible = true;
 
                 ClearAndClosePort();
                 sPort.Open();
                 timer5.Enabled = true;
 
-                Tablepanel.Visible=false;
+                Tablepanel.Visible=true;
                 btnCalibration.Text = "End";
                 
                 vertical_gaze_pos = max_y / 2;
                 horizontal_gaze_pos = max_x / 2;
+                trackingbox.BringToFront();
                 tracking_delay.Enabled = true;
                 tracking_delay.Start();
                 return;
@@ -251,6 +256,17 @@ namespace WAT
             game_start_flag = 1;
             tracking_delay.Enabled = false;
             tracking_delay.Stop();
+            gaze_timer.Enabled = true;
+            gaze_timer.Start();
+
+        }
+
+        private void gaze_location_update_timer(object sender, EventArgs e)
+        {
+            if (pos_delta_queue_x.Count <= 0) return;
+            trackingbox.Location = new Point((int)horizontal_gaze_pos, (int)vertical_gaze_pos);
+
+            scope2.Channels[0].Data.SetYData(realtime_diff_data_buffer_right_vertical);
         }
 
         private void move_timer(object sender, EventArgs e)
@@ -273,7 +289,7 @@ namespace WAT
             ClearAndClosePort();
             calibration_start_flag = 0;
 
-            Console.Write("sac cal start");
+            //Console.Write("sac cal start");
             saccade_calibration();
 
 
@@ -374,10 +390,10 @@ namespace WAT
             vertical_positive_ratio /= vertical_positive_count;
             vertical_negative_ratio /= vertical_negative_count;
 
-            Console.Write("positive ratio : ");
-            Console.WriteLine(vertical_positive_ratio);
-            Console.Write("negative ratio : ");
-            Console.WriteLine(vertical_negative_ratio);
+            //Console.Write("positive ratio : ");
+            //Console.WriteLine(vertical_positive_ratio);
+            //Console.Write("negative ratio : ");
+            //Console.WriteLine(vertical_negative_ratio);
            
             saccade_calibration_data_horizontal = saccade_calibration_data_horizontal.Take(saccade_top).ToArray();
             double[] horizontal_diff_result = signal_processor.Differential(saccade_calibration_data_horizontal);
@@ -549,8 +565,8 @@ namespace WAT
                             }
                             realtime_data_buffer_right_vertical[realtime_data_buffsize - 1] = Data_1;
                             realtime_data_buffer_horizontal[realtime_data_buffsize - 1] = Data_2;
-                            double vertical_diff = Data_1 - realtime_diff_data_buffer_right_vertical[realtime_data_buffsize - 2];
-                            double horizontal_diff = Data_2 - realtime_diff_data_buffer_horizontal[realtime_data_buffsize - 2];
+                            double vertical_diff = Data_1 - realtime_data_buffer_right_vertical[realtime_data_buffsize - 2];
+                            double horizontal_diff = Data_2 - realtime_data_buffer_horizontal[realtime_data_buffsize - 2];
                             double delayed_vertical_diff = realtime_diff_data_buffer_right_vertical[realtime_data_buffsize - delay_idx];
                             double delayed_horizontal_diff = realtime_diff_data_buffer_horizontal[realtime_data_buffsize - delay_idx];
                             realtime_diff_data_buffer_right_vertical[realtime_data_buffsize - 1] = vertical_diff;
@@ -584,7 +600,7 @@ namespace WAT
                                 
                                 double[] sliced_diff_signal = realtime_diff_data_buffer_right_vertical.Skip(realtime_data_buffsize - (delay_idx + 2)).ToArray();
                                 int[] blink_detection_result = signal_processor.BlinkDetection(sliced_diff_signal, vertical_peak_max, vertical_peak_min);
-                                for(int i=slice_start_idx-1; i <= slice_end_idx; i++)
+                                for(int i=slice_start_idx; i <= slice_end_idx; i++)
                                 {
                                     if (blink_detection_result[i-slice_start_idx] != 0)
                                     {
@@ -626,15 +642,15 @@ namespace WAT
                                             Console.WriteLine(face_pos_y);
                                             Console.Write("Face Pos horizontal : ");
                                             Console.WriteLine(face_pos_x);
-                                            
+
 
 
                                             face_on_counter = 0;
                                             face_on_flag = 0;
 
 
-                                            vertical_gaze_pos = face_pos_y;
-                                            horizontal_gaze_pos = face_pos_x;
+                                            //vertical_gaze_pos = face_pos_y;
+                                            //horizontal_gaze_pos = face_pos_x;
 
                                             current_state = 0;
                                             break;
@@ -673,8 +689,14 @@ namespace WAT
                             if (horizontal_gaze_pos > max_x) horizontal_gaze_pos = max_x;
                             else if (horizontal_gaze_pos < 0) horizontal_gaze_pos = 0;
 
-                            trackingbox.Location = new Point((int)horizontal_gaze_pos, (int)vertical_gaze_pos);
-                            
+                            pos_delta_queue_x.Enqueue((int)horizontal_gaze_pos);
+                            pos_delta_queue_y.Enqueue((int)vertical_gaze_pos);
+
+                            Console.Write("X pos : ");
+                            Console.WriteLine((int)horizontal_gaze_pos);
+                            Console.Write("Y pos : ");
+                            Console.WriteLine((int)vertical_gaze_pos);
+
 
                         }
                         start_flag = 0;
@@ -690,8 +712,8 @@ namespace WAT
 
         private void On_timer(object sender, EventArgs e)
         {
-            //scope2.Channels[0].Data.SetYData(data_right_vertical);
-            //scope3.Channels[0].Data.SetYData(calibration_data_right_vertical);
+            //scope2.Channels[0].Data.SetYData(calibration_data_right_vertical);
+            //scope3.Channels[0].Data.SetYData();
         }
 
         private void Calibration2_Timer(object sender, EventArgs e)
@@ -721,7 +743,7 @@ namespace WAT
             
             
             blink_calibration();
-            Console.Write("Cal1 end");
+            //Console.Write("Cal1 end");
 
         }
     }
