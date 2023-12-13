@@ -29,6 +29,18 @@ namespace WAT
 
         //Calibration 2
         private int cnt = 0;
+        private string[] img = new string[6] { @"C:\Users\Miri_73\Desktop\game_1.jpg", @"C:\Users\Miri_73\Desktop\game_2.jpg", @"C:\Users\Miri_73\Desktop\game_3.jpg", @"C:\Users\Miri_73\Desktop\game_4.jpg", @"C:\Users\Miri_73\Desktop\game_5.jpg", @"C:\Users\Miri_73\Desktop\gamebackground.jpg" };
+
+        //Game
+        private int img_cnt = 0;
+
+        //Score
+        private int score_accuracy = 0;
+        private int score_timing = 0;
+        private int score_duration = 0;
+        private int score_total = 0;
+        private string[] comment = new string[4] { "Low Gaze Accuracy", "Wink Timing", "Wink duration", "Wink Genious!" };
+
 
         //EOG data
         public int[] data_buff = new int[1200];
@@ -119,7 +131,8 @@ namespace WAT
             
             //Calibration 1 
             // 점 따라가기
-            if (flag == 2) {
+            if (flag == 2)
+            {
                 //sPort.Open();
                 Tablepanel.Visible = false;
                 Cal2text.Visible = false;
@@ -145,7 +158,7 @@ namespace WAT
             {
                 max_x = move_black.Location.X;
                 max_y = move_black.Location.Y;
-                sPort.Open();
+                //sPort.Open();
                 timer5.Enabled = true;
 
                 Tablepanel.Visible = false;
@@ -162,11 +175,13 @@ namespace WAT
             // game Start
             if (flag == 3)
             {
-                sPort.Open();
-                timer5.Enabled = true;
+                //sPort.Open();
+                Game_Panel.Visible = true;
+                game_timer.Enabled = true;
+                img_cnt = 0;
 
+                timer5.Enabled = true;
                 Tablepanel.Visible=false;
-                btnCalibration.Text = "End";
                 game_start_flag = 1;
                 return;
             }
@@ -215,7 +230,38 @@ namespace WAT
                 move_black.BackColor = Color.Black;
                 return;
             }
+            if (flag == 3)
+            {
+                Game_Image.ImageLocation = @"C:\Users\Miri_73\Desktop\game_gamebackground.jpg";
+                img_cnt = 0;
+                game_timer.Enabled = false;
+                return;
+            }
         }
+
+        private void change_img(object sender, EventArgs e)
+        {
+            if (img_cnt == 0)
+            {
+                Game_Image.ImageLocation = img[5];
+            }
+            else if ((img_cnt < 11)&&(img_cnt%2 == 1))
+            {
+                Game_Image.ImageLocation = img[(img_cnt-1)/2];
+            }
+            else if (img_cnt >10)
+            {
+                Game_Image.ImageLocation = img[5];
+                btnNext.Visible = true;
+                game_timer.Enabled = false;
+            }
+            else
+            {
+                Game_Image.ImageLocation = img[5];
+            }
+            img_cnt++;
+        }
+
         private void UpdateLocation()
         {
             x = (int)(max_x / 2 * Math.Cos(angle));
@@ -288,9 +334,9 @@ namespace WAT
             {
                 if (Convert.ToBoolean(signal_processor.CheckCrossThreshold(blink_removed_diff_signal[i], vertical_upper_threshold_value, vertical_lower_threshold_value)))
                 {
-                    vertical_eog_diff_for_regression[vertical_regression_top] = filtered_vertical_diff_signal[i];
-                    vertical_position_diff_for_regression[vertical_regression_top] = Cal_data[i + 1].y - Cal_data[i].y;
-                    vertical_regression_top++;
+                    //vertical_eog_diff_for_regression[vertical_regression_top] = filtered_vertical_diff_signal[i];
+                   // vertical_position_diff_for_regression[vertical_regression_top] = Cal_data[i + 1].y - Cal_data[i].y;
+                    //vertical_regression_top++;
 
                 }
             }
@@ -312,9 +358,9 @@ namespace WAT
             {
                 if (Convert.ToBoolean(signal_processor.CheckCrossThreshold(blink_removed_horizontal_diff_signal[i], horizontal_upper_threshold_value, horizontal_lower_threshold_value)))
                 {
-                    horizontal_eog_diff_for_regression[horizontal_regression_top] = horizontal_filtered[i];
-                    horizontal_position_diff_for_regression[horizontal_regression_top] = Cal_data[i + 1].x - Cal_data[i].x;
-                    horizontal_regression_top++;
+                    //horizontal_eog_diff_for_regression[horizontal_regression_top] = horizontal_filtered[i];
+                    //horizontal_position_diff_for_regression[horizontal_regression_top] = Cal_data[i + 1].x - Cal_data[i].x;
+                    //horizontal_regression_top++;
                 }
             }
             
@@ -368,6 +414,14 @@ namespace WAT
                 btnReset.Visible = false;
                 btnCalibration.Text = "Game Start";
                 Tablepanel.Visible = true;
+                return;
+            }
+            
+            if (flag == 3)
+            {
+                btnReset.Visible = false;
+                btnCalibration.Text = "Result";
+                Game_Panel.Visible = false;
                 return;
             }
 
