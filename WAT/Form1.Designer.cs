@@ -546,28 +546,30 @@ namespace WAT
             this.timer5 = new System.Windows.Forms.Timer(this.components);
             this.Game_Image = new System.Windows.Forms.PictureBox();
             this.Game_Panel = new System.Windows.Forms.Panel();
-            this.game_timer = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.comment_text = new System.Windows.Forms.Label();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.score1_text = new System.Windows.Forms.Label();
             this.score2_text = new System.Windows.Forms.Label();
             this.score3_text = new System.Windows.Forms.Label();
             this.totalscore_text = new System.Windows.Forms.Label();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label1 = new System.Windows.Forms.Label();
+            this.comment_text = new System.Windows.Forms.Label();
+            this.game_timer = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.gamepnt1 = new System.Windows.Forms.PictureBox();
             this.gamepnt2 = new System.Windows.Forms.PictureBox();
             this.gamepnt3 = new System.Windows.Forms.PictureBox();
             this.gamepnt5 = new System.Windows.Forms.PictureBox();
             this.gamepnt8 = new System.Windows.Forms.PictureBox();
-            this.gamepnt10 = new System.Windows.Forms.PictureBox();
             this.gamepnt6 = new System.Windows.Forms.PictureBox();
             this.gamepnt4 = new System.Windows.Forms.PictureBox();
-            this.gamepnt7 = new System.Windows.Forms.PictureBox();
             this.gamepnt9 = new System.Windows.Forms.PictureBox();
+            this.gamepnt7 = new System.Windows.Forms.PictureBox();
+            this.gamepnt10 = new System.Windows.Forms.PictureBox();
+            this.gamepnt1 = new System.Windows.Forms.PictureBox();
+            this.trackingbox = new System.Windows.Forms.PictureBox();
+            this.tracking_delay = new System.Windows.Forms.Timer(this.components);
             this.panel2.SuspendLayout();
             this.Tablepanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scope3)).BeginInit();
@@ -581,16 +583,17 @@ namespace WAT
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gamepnt1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gamepnt10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gamepnt7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gamepnt7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gamepnt10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gamepnt1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackingbox)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -603,9 +606,10 @@ namespace WAT
             this.panel2.Controls.Add(this.Cal2text);
             this.panel2.Controls.Add(this.move_black);
             this.panel2.Font = new System.Drawing.Font("굴림", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.panel2.Location = new System.Drawing.Point(11, 50);
+            this.panel2.Location = new System.Drawing.Point(8, 33);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(976, 478);
+            this.panel2.Size = new System.Drawing.Size(683, 319);
             this.panel2.TabIndex = 2;
             // 
             // Tablepanel
@@ -619,12 +623,13 @@ namespace WAT
             this.Tablepanel.Controls.Add(this.scope1, 0, 1);
             this.Tablepanel.Controls.Add(this.scope2, 0, 0);
             this.Tablepanel.Location = new System.Drawing.Point(0, 0);
+            this.Tablepanel.Margin = new System.Windows.Forms.Padding(2);
             this.Tablepanel.Name = "Tablepanel";
             this.Tablepanel.RowCount = 3;
             this.Tablepanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.Tablepanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.Tablepanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.Tablepanel.Size = new System.Drawing.Size(977, 478);
+            this.Tablepanel.Size = new System.Drawing.Size(684, 319);
             this.Tablepanel.TabIndex = 4;
             this.Tablepanel.Visible = false;
             // 
@@ -727,10 +732,11 @@ namespace WAT
             legendGroup8.Cursor = System.Windows.Forms.Cursors.Default;
             scopeLegendView1.Zones = legendGroup8;
             this.scope3.Legend = scopeLegendView1;
-            this.scope3.Location = new System.Drawing.Point(3, 321);
+            this.scope3.Location = new System.Drawing.Point(2, 214);
+            this.scope3.Margin = new System.Windows.Forms.Padding(2);
             this.scope3.Name = "scope3";
             this.scope3.RefreshInterval = ((uint)(100u));
-            this.scope3.Size = new System.Drawing.Size(971, 154);
+            this.scope3.Size = new System.Drawing.Size(680, 103);
             this.scope3.SizeLimit = ((uint)(0u));
             this.scope3.TabIndex = 2;
             this.scope3.Text = "scope3";
@@ -1078,10 +1084,11 @@ namespace WAT
             legendGroup16.Cursor = System.Windows.Forms.Cursors.Default;
             scopeLegendView2.Zones = legendGroup16;
             this.scope1.Legend = scopeLegendView2;
-            this.scope1.Location = new System.Drawing.Point(3, 162);
+            this.scope1.Location = new System.Drawing.Point(2, 108);
+            this.scope1.Margin = new System.Windows.Forms.Padding(2);
             this.scope1.Name = "scope1";
             this.scope1.RefreshInterval = ((uint)(100u));
-            this.scope1.Size = new System.Drawing.Size(971, 153);
+            this.scope1.Size = new System.Drawing.Size(680, 102);
             this.scope1.SizeLimit = ((uint)(0u));
             this.scope1.TabIndex = 0;
             this.scope1.Text = "scope1";
@@ -1432,10 +1439,11 @@ namespace WAT
             legendGroup24.Cursor = System.Windows.Forms.Cursors.Default;
             scopeLegendView3.Zones = legendGroup24;
             this.scope2.Legend = scopeLegendView3;
-            this.scope2.Location = new System.Drawing.Point(3, 3);
+            this.scope2.Location = new System.Drawing.Point(2, 2);
+            this.scope2.Margin = new System.Windows.Forms.Padding(2);
             this.scope2.Name = "scope2";
             this.scope2.RefreshInterval = ((uint)(100u));
-            this.scope2.Size = new System.Drawing.Size(971, 153);
+            this.scope2.Size = new System.Drawing.Size(680, 102);
             this.scope2.SizeLimit = ((uint)(0u));
             this.scope2.TabIndex = 1;
             this.scope2.Text = "scope2";
@@ -1691,10 +1699,9 @@ namespace WAT
             // 
             this.Cal2text.AutoSize = true;
             this.Cal2text.Font = new System.Drawing.Font("굴림", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.Cal2text.Location = new System.Drawing.Point(49, 50);
-            this.Cal2text.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Cal2text.Location = new System.Drawing.Point(34, 33);
             this.Cal2text.Name = "Cal2text";
-            this.Cal2text.Size = new System.Drawing.Size(1609, 96);
+            this.Cal2text.Size = new System.Drawing.Size(1078, 64);
             this.Cal2text.TabIndex = 1;
             this.Cal2text.Text = "When color change, wink your eye";
             this.Cal2text.Visible = false;
@@ -1703,9 +1710,10 @@ namespace WAT
             // 
             this.move_black.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.move_black.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
-            this.move_black.Location = new System.Drawing.Point(947, 448);
+            this.move_black.Location = new System.Drawing.Point(663, 299);
+            this.move_black.Margin = new System.Windows.Forms.Padding(2);
             this.move_black.Name = "move_black";
-            this.move_black.Size = new System.Drawing.Size(29, 30);
+            this.move_black.Size = new System.Drawing.Size(20, 20);
             this.move_black.TabIndex = 0;
             this.move_black.TabStop = false;
             this.move_black.Visible = false;
@@ -1713,10 +1721,11 @@ namespace WAT
             // btnCalibration
             // 
             this.btnCalibration.Cursor = System.Windows.Forms.Cursors.WaitCursor;
-            this.btnCalibration.Location = new System.Drawing.Point(11, 12);
+            this.btnCalibration.Location = new System.Drawing.Point(8, 8);
+            this.btnCalibration.Margin = new System.Windows.Forms.Padding(2);
             this.btnCalibration.Name = "btnCalibration";
             this.btnCalibration.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btnCalibration.Size = new System.Drawing.Size(195, 33);
+            this.btnCalibration.Size = new System.Drawing.Size(136, 22);
             this.btnCalibration.TabIndex = 0;
             this.btnCalibration.Text = "Calibration 1";
             this.btnCalibration.UseVisualStyleBackColor = true;
@@ -1726,9 +1735,10 @@ namespace WAT
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(212, 12);
+            this.btnReset.Location = new System.Drawing.Point(148, 8);
+            this.btnReset.Margin = new System.Windows.Forms.Padding(2);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(195, 33);
+            this.btnReset.Size = new System.Drawing.Size(136, 22);
             this.btnReset.TabIndex = 3;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -1748,9 +1758,10 @@ namespace WAT
             // btnNext
             // 
             this.btnNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNext.Location = new System.Drawing.Point(787, 12);
+            this.btnNext.Location = new System.Drawing.Point(551, 8);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(2);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(195, 33);
+            this.btnNext.Size = new System.Drawing.Size(136, 22);
             this.btnNext.TabIndex = 4;
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -1789,8 +1800,9 @@ namespace WAT
             this.Game_Image.ImageLocation = "";
             this.Game_Image.InitialImage = null;
             this.Game_Image.Location = new System.Drawing.Point(0, 0);
+            this.Game_Image.Margin = new System.Windows.Forms.Padding(2);
             this.Game_Image.Name = "Game_Image";
-            this.Game_Image.Size = new System.Drawing.Size(977, 477);
+            this.Game_Image.Size = new System.Drawing.Size(684, 318);
             this.Game_Image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.Game_Image.TabIndex = 0;
             this.Game_Image.TabStop = false;
@@ -1803,16 +1815,12 @@ namespace WAT
             this.Game_Panel.BackColor = System.Drawing.Color.White;
             this.Game_Panel.Controls.Add(this.tableLayoutPanel1);
             this.Game_Panel.Controls.Add(this.Game_Image);
-            this.Game_Panel.Location = new System.Drawing.Point(11, 51);
+            this.Game_Panel.Location = new System.Drawing.Point(8, 34);
+            this.Game_Panel.Margin = new System.Windows.Forms.Padding(2);
             this.Game_Panel.Name = "Game_Panel";
-            this.Game_Panel.Size = new System.Drawing.Size(977, 477);
+            this.Game_Panel.Size = new System.Drawing.Size(684, 318);
             this.Game_Panel.TabIndex = 5;
             this.Game_Panel.Visible = false;
-            // 
-            // game_timer
-            // 
-            this.game_timer.Interval = 2000;
-            this.game_timer.Tick += new System.EventHandler(this.change_img);
             // 
             // tableLayoutPanel1
             // 
@@ -1824,14 +1832,15 @@ namespace WAT
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.comment_text, 0, 2);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(841, 265);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(589, 177);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(977, 516);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 13F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(684, 344);
             this.tableLayoutPanel1.TabIndex = 6;
             this.tableLayoutPanel1.Visible = false;
             // 
@@ -1845,37 +1854,13 @@ namespace WAT
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.chart1, 0, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 106);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 70);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(971, 303);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(680, 202);
             this.tableLayoutPanel2.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.SystemColors.Control;
-            this.label1.Font = new System.Drawing.Font("굴림", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(971, 103);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Result";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // comment_text
-            // 
-            this.comment_text.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.comment_text.AutoSize = true;
-            this.comment_text.Font = new System.Drawing.Font("굴림", 26F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.comment_text.Location = new System.Drawing.Point(3, 438);
-            this.comment_text.Name = "comment_text";
-            this.comment_text.Size = new System.Drawing.Size(971, 52);
-            this.comment_text.TabIndex = 2;
-            this.comment_text.Text = "Comment :";
-            this.comment_text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel3
             // 
@@ -1889,14 +1874,15 @@ namespace WAT
             this.tableLayoutPanel3.Controls.Add(this.score2_text, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.score3_text, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.totalscore_text, 0, 3);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(488, 3);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(342, 2);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 4;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(480, 297);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(336, 198);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // score1_text
@@ -1904,9 +1890,10 @@ namespace WAT
             this.score1_text.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.score1_text.AutoSize = true;
             this.score1_text.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.score1_text.Location = new System.Drawing.Point(3, 21);
+            this.score1_text.Location = new System.Drawing.Point(2, 13);
+            this.score1_text.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.score1_text.Name = "score1_text";
-            this.score1_text.Size = new System.Drawing.Size(474, 32);
+            this.score1_text.Size = new System.Drawing.Size(332, 22);
             this.score1_text.TabIndex = 0;
             this.score1_text.Text = "score1 :";
             this.score1_text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1916,9 +1903,10 @@ namespace WAT
             this.score2_text.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.score2_text.AutoSize = true;
             this.score2_text.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.score2_text.Location = new System.Drawing.Point(3, 95);
+            this.score2_text.Location = new System.Drawing.Point(2, 62);
+            this.score2_text.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.score2_text.Name = "score2_text";
-            this.score2_text.Size = new System.Drawing.Size(474, 32);
+            this.score2_text.Size = new System.Drawing.Size(332, 22);
             this.score2_text.TabIndex = 1;
             this.score2_text.Text = "score 2 :";
             this.score2_text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1928,9 +1916,10 @@ namespace WAT
             this.score3_text.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.score3_text.AutoSize = true;
             this.score3_text.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.score3_text.Location = new System.Drawing.Point(3, 169);
+            this.score3_text.Location = new System.Drawing.Point(2, 111);
+            this.score3_text.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.score3_text.Name = "score3_text";
-            this.score3_text.Size = new System.Drawing.Size(474, 32);
+            this.score3_text.Size = new System.Drawing.Size(332, 22);
             this.score3_text.TabIndex = 2;
             this.score3_text.Text = "score 3 :";
             this.score3_text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1940,9 +1929,10 @@ namespace WAT
             this.totalscore_text.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.totalscore_text.AutoSize = true;
             this.totalscore_text.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.totalscore_text.Location = new System.Drawing.Point(3, 243);
+            this.totalscore_text.Location = new System.Drawing.Point(2, 161);
+            this.totalscore_text.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.totalscore_text.Name = "totalscore_text";
-            this.totalscore_text.Size = new System.Drawing.Size(474, 32);
+            this.totalscore_text.Size = new System.Drawing.Size(332, 22);
             this.totalscore_text.TabIndex = 3;
             this.totalscore_text.Text = "Total Score :";
             this.totalscore_text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1953,16 +1943,49 @@ namespace WAT
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(3, 3);
+            this.chart1.Location = new System.Drawing.Point(2, 2);
+            this.chart1.Margin = new System.Windows.Forms.Padding(2);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Radar;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(300, 297);
+            this.chart1.Size = new System.Drawing.Size(210, 198);
             this.chart1.TabIndex = 1;
             this.chart1.Text = "chart1";
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.Control;
+            this.label1.Font = new System.Drawing.Font("굴림", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.Location = new System.Drawing.Point(2, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(680, 68);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Result";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // comment_text
+            // 
+            this.comment_text.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.comment_text.AutoSize = true;
+            this.comment_text.Font = new System.Drawing.Font("굴림", 26F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.comment_text.Location = new System.Drawing.Point(2, 291);
+            this.comment_text.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.comment_text.Name = "comment_text";
+            this.comment_text.Size = new System.Drawing.Size(680, 35);
+            this.comment_text.TabIndex = 2;
+            this.comment_text.Text = "Comment :";
+            this.comment_text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // game_timer
+            // 
+            this.game_timer.Interval = 2000;
+            this.game_timer.Tick += new System.EventHandler(this.change_img);
             // 
             // tableLayoutPanel4
             // 
@@ -1971,17 +1994,17 @@ namespace WAT
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel4.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.tableLayoutPanel4.ColumnCount = 11;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 135F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 133F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 94F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 39F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 61F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 65F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 65F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 18F));
             this.tableLayoutPanel4.Controls.Add(this.gamepnt2, 3, 2);
             this.tableLayoutPanel4.Controls.Add(this.gamepnt3, 4, 1);
             this.tableLayoutPanel4.Controls.Add(this.gamepnt5, 8, 1);
@@ -1992,105 +2015,125 @@ namespace WAT
             this.tableLayoutPanel4.Controls.Add(this.gamepnt7, 2, 3);
             this.tableLayoutPanel4.Controls.Add(this.gamepnt10, 9, 4);
             this.tableLayoutPanel4.Controls.Add(this.gamepnt1, 1, 1);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(12, 50);
+            this.tableLayoutPanel4.Controls.Add(this.trackingbox, 10, 4);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(8, 33);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 5;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 175F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 175F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(977, 475);
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 117F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 117F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(684, 317);
             this.tableLayoutPanel4.TabIndex = 7;
             this.tableLayoutPanel4.Visible = false;
             // 
-            // gamepnt1
-            // 
-            this.gamepnt1.Location = new System.Drawing.Point(138, 41);
-            this.gamepnt1.Name = "gamepnt1";
-            this.gamepnt1.Size = new System.Drawing.Size(100, 50);
-            this.gamepnt1.TabIndex = 0;
-            this.gamepnt1.TabStop = false;
-            // 
             // gamepnt2
             // 
-            this.gamepnt2.Location = new System.Drawing.Point(315, 216);
+            this.gamepnt2.Location = new System.Drawing.Point(220, 144);
+            this.gamepnt2.Margin = new System.Windows.Forms.Padding(2);
             this.gamepnt2.Name = "gamepnt2";
-            this.gamepnt2.Size = new System.Drawing.Size(81, 47);
+            this.gamepnt2.Size = new System.Drawing.Size(57, 31);
             this.gamepnt2.TabIndex = 1;
             this.gamepnt2.TabStop = false;
             // 
             // gamepnt3
             // 
-            this.gamepnt3.Location = new System.Drawing.Point(402, 41);
+            this.gamepnt3.Location = new System.Drawing.Point(281, 27);
+            this.gamepnt3.Margin = new System.Windows.Forms.Padding(2);
             this.gamepnt3.Name = "gamepnt3";
-            this.gamepnt3.Size = new System.Drawing.Size(39, 47);
+            this.gamepnt3.Size = new System.Drawing.Size(27, 31);
             this.gamepnt3.TabIndex = 2;
             this.gamepnt3.TabStop = false;
             // 
             // gamepnt5
             // 
-            this.gamepnt5.Location = new System.Drawing.Point(675, 41);
+            this.gamepnt5.Location = new System.Drawing.Point(472, 27);
+            this.gamepnt5.Margin = new System.Windows.Forms.Padding(2);
             this.gamepnt5.Name = "gamepnt5";
-            this.gamepnt5.Size = new System.Drawing.Size(33, 47);
+            this.gamepnt5.Size = new System.Drawing.Size(23, 31);
             this.gamepnt5.TabIndex = 3;
             this.gamepnt5.TabStop = false;
             // 
             // gamepnt8
             // 
-            this.gamepnt8.Location = new System.Drawing.Point(447, 444);
+            this.gamepnt8.Location = new System.Drawing.Point(313, 296);
+            this.gamepnt8.Margin = new System.Windows.Forms.Padding(2);
             this.gamepnt8.Name = "gamepnt8";
-            this.gamepnt8.Size = new System.Drawing.Size(87, 28);
+            this.gamepnt8.Size = new System.Drawing.Size(61, 19);
             this.gamepnt8.TabIndex = 4;
             this.gamepnt8.TabStop = false;
             // 
-            // gamepnt10
-            // 
-            this.gamepnt10.Location = new System.Drawing.Point(714, 444);
-            this.gamepnt10.Name = "gamepnt10";
-            this.gamepnt10.Size = new System.Drawing.Size(87, 28);
-            this.gamepnt10.TabIndex = 5;
-            this.gamepnt10.TabStop = false;
-            // 
             // gamepnt6
             // 
-            this.gamepnt6.Location = new System.Drawing.Point(846, 216);
+            this.gamepnt6.Location = new System.Drawing.Point(591, 144);
+            this.gamepnt6.Margin = new System.Windows.Forms.Padding(2);
             this.gamepnt6.Name = "gamepnt6";
-            this.gamepnt6.Size = new System.Drawing.Size(87, 28);
+            this.gamepnt6.Size = new System.Drawing.Size(61, 19);
             this.gamepnt6.TabIndex = 6;
             this.gamepnt6.TabStop = false;
             // 
             // gamepnt4
             // 
-            this.gamepnt4.Location = new System.Drawing.Point(582, 216);
+            this.gamepnt4.Location = new System.Drawing.Point(407, 144);
+            this.gamepnt4.Margin = new System.Windows.Forms.Padding(2);
             this.gamepnt4.Name = "gamepnt4";
-            this.gamepnt4.Size = new System.Drawing.Size(87, 28);
+            this.gamepnt4.Size = new System.Drawing.Size(61, 19);
             this.gamepnt4.TabIndex = 7;
             this.gamepnt4.TabStop = false;
             // 
-            // gamepnt7
-            // 
-            this.gamepnt7.Location = new System.Drawing.Point(271, 269);
-            this.gamepnt7.Name = "gamepnt7";
-            this.gamepnt7.Size = new System.Drawing.Size(38, 28);
-            this.gamepnt7.TabIndex = 8;
-            this.gamepnt7.TabStop = false;
-            // 
             // gamepnt9
             // 
-            this.gamepnt9.Location = new System.Drawing.Point(540, 269);
+            this.gamepnt9.Location = new System.Drawing.Point(378, 179);
+            this.gamepnt9.Margin = new System.Windows.Forms.Padding(2);
             this.gamepnt9.Name = "gamepnt9";
-            this.gamepnt9.Size = new System.Drawing.Size(36, 28);
+            this.gamepnt9.Size = new System.Drawing.Size(25, 19);
             this.gamepnt9.TabIndex = 9;
             this.gamepnt9.TabStop = false;
             // 
+            // gamepnt7
+            // 
+            this.gamepnt7.Location = new System.Drawing.Point(189, 179);
+            this.gamepnt7.Margin = new System.Windows.Forms.Padding(2);
+            this.gamepnt7.Name = "gamepnt7";
+            this.gamepnt7.Size = new System.Drawing.Size(27, 19);
+            this.gamepnt7.TabIndex = 8;
+            this.gamepnt7.TabStop = false;
+            // 
+            // gamepnt10
+            // 
+            this.gamepnt10.Location = new System.Drawing.Point(499, 296);
+            this.gamepnt10.Margin = new System.Windows.Forms.Padding(2);
+            this.gamepnt10.Name = "gamepnt10";
+            this.gamepnt10.Size = new System.Drawing.Size(61, 19);
+            this.gamepnt10.TabIndex = 5;
+            this.gamepnt10.TabStop = false;
+            // 
+            // gamepnt1
+            // 
+            this.gamepnt1.Location = new System.Drawing.Point(96, 27);
+            this.gamepnt1.Margin = new System.Windows.Forms.Padding(2);
+            this.gamepnt1.Name = "gamepnt1";
+            this.gamepnt1.Size = new System.Drawing.Size(70, 33);
+            this.gamepnt1.TabIndex = 0;
+            this.gamepnt1.TabStop = false;
+            // 
+            // trackingbox
+            // 
+            this.trackingbox.Location = new System.Drawing.Point(592, 297);
+            this.trackingbox.Name = "trackingbox";
+            this.trackingbox.Size = new System.Drawing.Size(89, 17);
+            this.trackingbox.TabIndex = 10;
+            this.trackingbox.TabStop = false;
+            // 
             // WAT
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1000, 540);
+            this.ClientSize = new System.Drawing.Size(700, 360);
             this.Controls.Add(this.tableLayoutPanel4);
             this.Controls.Add(this.Game_Panel);
             this.Controls.Add(this.btnNext);
@@ -2098,7 +2141,6 @@ namespace WAT
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.btnCalibration);
             this.HelpButton = true;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "WAT";
             this.Text = "WAT";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -2118,16 +2160,17 @@ namespace WAT
             this.tableLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.tableLayoutPanel4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gamepnt1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gamepnt10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gamepnt7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gamepnt7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gamepnt10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gamepnt1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackingbox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2174,6 +2217,8 @@ namespace WAT
         private System.Windows.Forms.PictureBox gamepnt4;
         private System.Windows.Forms.PictureBox gamepnt7;
         private System.Windows.Forms.PictureBox gamepnt9;
+        private System.Windows.Forms.PictureBox trackingbox;
+        private System.Windows.Forms.Timer tracking_delay;
     }
 }
 
