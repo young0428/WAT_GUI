@@ -1752,7 +1752,7 @@ namespace WAT
             // 
             // timer2
             // 
-            this.timer2.Interval = 6000;
+            this.timer2.Interval = 10000;
             this.timer2.Tick += new System.EventHandler(this.timer1_stop);
             // 
             // btnNext
@@ -1775,13 +1775,13 @@ namespace WAT
             // 
             // timer4
             // 
-            this.timer4.Interval = 11999;
+            this.timer4.Interval = 12999;
             this.timer4.Tick += new System.EventHandler(this.Calibration2_stop_timer);
             // 
             // sPort
             // 
             this.sPort.BaudRate = 115200;
-            this.sPort.PortName = "COM14";
+            this.sPort.PortName = "COM5";
             this.sPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.sPort_DataReceived);
             // 
             // timer5
@@ -2189,7 +2189,6 @@ namespace WAT
         private System.Windows.Forms.TableLayoutPanel Tablepanel;
         private System.Windows.Forms.Panel panel2;
         private Mitov.PlotLab.Scope scope1;
-        private Mitov.PlotLab.Scope scope2;
         private Mitov.PlotLab.Scope scope3;
         private System.IO.Ports.SerialPort sPort;
         private System.Windows.Forms.Timer timer5;
