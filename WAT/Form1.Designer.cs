@@ -532,7 +532,7 @@ namespace WAT
             this.Tablepanel = new System.Windows.Forms.TableLayoutPanel();
             this.scope3 = new Mitov.PlotLab.Scope(this.components);
             this.scope1 = new Mitov.PlotLab.Scope(this.components);
-            this.scope2 = new Mitov.PlotLab.Scope(this.components);
+            //this.scope2 = new Mitov.PlotLab.Scope(this.components);
             this.Cal2text = new System.Windows.Forms.Label();
             this.move_black = new System.Windows.Forms.PictureBox();
             this.btnCalibration = new System.Windows.Forms.Button();
@@ -574,7 +574,7 @@ namespace WAT
             this.Tablepanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scope3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.scope1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.scope2)).BeginInit();
+            //((System.ComponentModel.ISupportInitialize)(this.scope2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.move_black)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Game_Image)).BeginInit();
             this.Game_Panel.SuspendLayout();
@@ -621,7 +621,7 @@ namespace WAT
             this.Tablepanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.Tablepanel.Controls.Add(this.scope3, 0, 2);
             this.Tablepanel.Controls.Add(this.scope1, 0, 1);
-            this.Tablepanel.Controls.Add(this.scope2, 0, 0);
+            //this.Tablepanel.Controls.Add(this.scope2, 0, 0);
             this.Tablepanel.Location = new System.Drawing.Point(0, 0);
             this.Tablepanel.Margin = new System.Windows.Forms.Padding(2);
             this.Tablepanel.Name = "Tablepanel";
@@ -1342,10 +1342,10 @@ namespace WAT
             // 
             // scope2
             // 
-            this.scope2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.scope2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            //this.scope2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            //| System.Windows.Forms.AnchorStyles.Left) 
+            //| System.Windows.Forms.AnchorStyles.Right)));
+            //this.scope2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             scopeChannel3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             scopeChannel3.MouseCursor = System.Windows.Forms.Cursors.Default;
             scopeChannel3.Name = "EOG Vertical(R)";
@@ -1358,15 +1358,15 @@ namespace WAT
             scopeChannel3.SizeLimit = ((uint)(0u));
             scopeChannel3.XAxisIndex = 0;
             scopeChannel3.YAxisIndex = 0;
-            this.scope2.Channels.AddRange(new Mitov.PlotLab.ScopeChannel[] {
-            scopeChannel3});
+            //this.scope2.Channels.AddRange(new Mitov.PlotLab.ScopeChannel[] {
+            //scopeChannel3});
             displayViewBackground11.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             scopeDataView3.Background = displayViewBackground11;
             vclPen14.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             vclPen14.InternalData = ((Vcl.VclBinaryData)(resources.GetObject("vclPen14.InternalData")));
             displayGridLineSettings11.Pen = vclPen14;
             scopeDataView3.Border = displayGridLineSettings11;
-            this.scope2.DataView = scopeDataView3;
+            //this.scope2.DataView = scopeDataView3;
             channelItemHighlighting5.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
             dataChartHighlighting3.ChannelLinks = channelItemHighlighting5;
             channelItemHighlighting6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
@@ -1387,9 +1387,9 @@ namespace WAT
             dataChartHighlighting3.MouseHitPoint = channelMouseHitPoint3;
             displayItemHighlighting18.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
             dataChartHighlighting3.Zones = displayItemHighlighting18;
-            this.scope2.Highlighting = dataChartHighlighting3;
-            this.scope2.InputPins = pinList5;
-            this.scope2.InternalData = ((Vcl.VclBinaryData)(resources.GetObject("scope2.InternalData")));
+            //this.scope2.Highlighting = dataChartHighlighting3;
+            //this.scope2.InputPins = pinList5;
+            //this.scope2.InternalData = ((Vcl.VclBinaryData)(resources.GetObject("scope2.InternalData")));
             displayViewBackground12.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             scopeLegendView3.Background = displayViewBackground12;
             legendViewButtonSettings3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
@@ -1438,15 +1438,15 @@ namespace WAT
             legendGroup24.Caption = displayLabel24;
             legendGroup24.Cursor = System.Windows.Forms.Cursors.Default;
             scopeLegendView3.Zones = legendGroup24;
-            this.scope2.Legend = scopeLegendView3;
-            this.scope2.Location = new System.Drawing.Point(2, 2);
-            this.scope2.Margin = new System.Windows.Forms.Padding(2);
-            this.scope2.Name = "scope2";
-            this.scope2.RefreshInterval = ((uint)(100u));
-            this.scope2.Size = new System.Drawing.Size(680, 102);
-            this.scope2.SizeLimit = ((uint)(0u));
-            this.scope2.TabIndex = 1;
-            this.scope2.Text = "scope2";
+            //this.scope2.Legend = scopeLegendView3;
+            //this.scope2.Location = new System.Drawing.Point(2, 2);
+            //this.scope2.Margin = new System.Windows.Forms.Padding(2);
+            //this.scope2.Name = "scope2";
+            //this.scope2.RefreshInterval = ((uint)(100u));
+            //this.scope2.Size = new System.Drawing.Size(680, 102);
+            //this.scope2.SizeLimit = ((uint)(0u));
+            //this.scope2.TabIndex = 1;
+            //this.scope2.Text = "scope2";
             displayViewBackground13.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             displayTitle3.Background = displayViewBackground13;
             displayTitle3.Font = new Vcl.VclFont(System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255))))), "Arial", 1, 0, true, 32, 1);
@@ -1454,7 +1454,7 @@ namespace WAT
             displayTitle3.Text = "EOG Vertical(R)";
             displayViewSize10.Size = ((uint)(100u));
             displayTitle3.ViewSize = displayViewSize10;
-            this.scope2.Title = displayTitle3;
+            //this.scope2.Title = displayTitle3;
             displayToolBar3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             displayToolBar3.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             displayToolBarButton45.Image = displayToolBarButtonImage45;
@@ -1496,11 +1496,11 @@ namespace WAT
             displayToolBar3.MouseOverButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             toolBarPosition3.InternalData = ((Vcl.VclBinaryData)(resources.GetObject("toolBarPosition3.InternalData")));
             displayToolBar3.Position = toolBarPosition3;
-            this.scope2.ToolBar = displayToolBar3;
+            //this.scope2.ToolBar = displayToolBar3;
             displayTrails3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             displayTrails3.Font = new Vcl.VclFont(System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255))))), "Arial", 1, 0, true, 16, 0);
             displayTrails3.Width = ((uint)(1u));
-            this.scope2.Trails = displayTrails3;
+            //this.scope2.Trails = displayTrails3;
             displayTitleLabel5.Font = new Vcl.VclFont(System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255))))), "Arial", 1, 0, true, 20, 1);
             scopeXAxis3.AxisLabel = displayTitleLabel5;
             displayViewBackground14.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -1590,8 +1590,8 @@ namespace WAT
             displayAxisZoom5.Range = displayValueRange15;
             scopeXAxis3.Zooming = displayAxisZoom5;
             scopeXAxis3.ZoomPin = statePin5;
-            this.scope2.XAxis = scopeXAxis3;
-            this.scope2.XInputPins = pinList6;
+            //this.scope2.XAxis = scopeXAxis3;
+            //this.scope2.XInputPins = pinList6;
             scopeAutoScaling3.EnabledMax = false;
             scopeAutoScaling3.EnabledMin = false;
             scopeAutoScaling3.MaxHistory = ((uint)(20u));
@@ -1691,9 +1691,9 @@ namespace WAT
             displayAxisZoom6.Range = displayValueRange18;
             scopeYAxis3.Zooming = displayAxisZoom6;
             scopeYAxis3.ZoomPin = statePin6;
-            this.scope2.YAxis = scopeYAxis3;
+            //this.scope2.YAxis = scopeYAxis3;
             displayZoom3.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.scope2.Zooming = displayZoom3;
+            //this.scope2.Zooming = displayZoom3;
             // 
             // Cal2text
             // 
@@ -2149,7 +2149,7 @@ namespace WAT
             this.Tablepanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scope3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.scope1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.scope2)).EndInit();
+            //((System.ComponentModel.ISupportInitialize)(this.scope2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.move_black)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Game_Image)).EndInit();
             this.Game_Panel.ResumeLayout(false);

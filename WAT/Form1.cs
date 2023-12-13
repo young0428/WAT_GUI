@@ -346,7 +346,7 @@ namespace WAT
             int[] blink_detection_result = signal_processor.BlinkDetection(filtered_vertical_diff_signal, vertical_peak_max, vertical_peak_min);
 
             //scope2.Channels[0].Data.SetYData(test_value);
-            scope2.Channels[0].Data.SetYData(filtered_vertical_diff_signal);
+            //scope2.Channels[0].Data.SetYData(filtered_vertical_diff_signal);
             scope3.Channels[0].Data.SetYData(blink_detection_result) ;
         }
         private void saccade_calibration()
@@ -497,7 +497,7 @@ namespace WAT
             horizontal_negative_ratio /= horizontal_negative_count;
 
             
-            scope2.Channels[0].Data.SetYData(vertical_diff_result);
+            //scope2.Channels[0].Data.SetYData(vertical_diff_result);
             scope3.Channels[0].Data.SetYData(horizontal_diff_result);
 
         }
