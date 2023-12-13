@@ -31,9 +31,9 @@ namespace WAT
         public double lower_baseline_threshold;
         public double second_upper_threshold;
         public double baseline_ratio = 0.2;
-        public double threshold_ratio = 0.7;
-        public double second_threshold_ratio = 0.2;
-        public int sampling_rate = 160;
+        public double threshold_ratio = 0.5;
+        public double second_threshold_ratio = 0.35;
+        public int sampling_rate = 50;
         public double initial_value;
         public double blink_detect_period = 0.2;
 
@@ -85,12 +85,37 @@ namespace WAT
         public (double, double) PeakMinMax(double[] signal, double[] peak_data, int lag)
         {
             int state = 0;
+            int inf = 99999999;
             double max_peak_value = 0;
-            double min_peak_value = 9999999999;
+            double min_peak_value = inf;
+            int max_detect = 0;
+            int max_count = 0;
+
+            int min_detect = 0;
+            int min_count = 0;
+            double max_sum = 0;
+            double min_sum = 0;
+            int current_state = 0;
             for (int i = lag; i < signal.Length; i++)
             {
+                if(current_state != peak_data[i] || i+1 == signal.Length)
+                {
+                    if(current_state == 1)
+                    {
+                        max_count++;
+                        max_sum += max_peak_value;
+                        max_peak_value = 0;
+                    }
+                    else if(current_state == -1)
+                    {
+                        min_count++;
+                        min_sum += min_peak_value;
+                        min_peak_value = inf;
+                    }
+                }
                 if (peak_data[i] == 1)
                 {
+                    
                     if (max_peak_value < signal[i])
                     {
                         max_peak_value = signal[i];   // Diff, second_diff 데이터는 index가 한칸씩 당겨져있음
@@ -98,13 +123,16 @@ namespace WAT
                 }
                 else if (peak_data[i] == -1)
                 {
-
+                    
                     if (min_peak_value > peak_data[i])
                     {
                         min_peak_value = signal[i];
                     }
                 }
+                current_state = (int)peak_data[i];
             }
+            max_peak_value = max_sum / max_count;
+            min_peak_value = min_sum / min_count;
             return (max_peak_value, min_peak_value);
         }
         public int[] BlinkDetection(double[] filtered_first_diff_signal, double max_value, double min_value)
@@ -116,7 +144,10 @@ namespace WAT
             double upper_threshold = this.threshold_ratio * max_value;
             double second_upper_threshold = this.second_threshold_ratio * max_value;
             double lower_threshold = this.threshold_ratio * min_value;
-            double blink_detect_period = 0.2; // second
+            double blink_detect_period = 0.3; // second
+            double blink_period_max = 0;
+            double inf = 9999999;
+            double blink_period_min = inf;
 
             int blink_start_index, blink_end_index;
             int cross_upper_threshold, cross_lower_threshold, cross_second_upper_threshold;
@@ -145,7 +176,7 @@ namespace WAT
 
             int cross_upper_idx = -1;
             int cross_lower_idx = -1;
-            int detect_time_limit = (int)(this.sampling_rate * this.blink_detect_period * 0.7);
+            int detect_time_limit = (int)(this.sampling_rate * this.blink_detect_period * 0.8);
             int detect_timer = 99999999;
 
 
@@ -173,9 +204,11 @@ namespace WAT
                     cross_lower_threshold = 0;
                     blink_detected = 0;
                     blink_start_index = -1;
+                    blink_period_min = inf;
                     blink_end_index = -1;
                     blink_type = 0;     // 1 == unintended, 2 = intended
                     cross_upper_idx = -1;
+                    blink_period_max = 0;
                     cross_lower_idx = -1;
                     detect_timer = 99999999;
                     Console.Write("base return");
@@ -187,22 +220,24 @@ namespace WAT
                 {
                     Console.Write("cross upper threshold");
                     Console.WriteLine(i);
+                    if(blink_period_max < filtered_first_diff_signal[i])
+                    {
+                        blink_period_max = filtered_first_diff_signal[i];
+                        second_upper_threshold = blink_period_max * 0.2;
+                    }
                     cross_upper_threshold = 1;
                     cross_upper_idx = i;
                     detect_timer = detect_time_limit;
                     continue;
                 }
-                //if (cross_upper_threshold != 0 && cross_lower_threshold == 0 && (i - cross_upper_idx) >= this.sampling_rate * blink_detect_period)
-                //{
-
-                //    Console.Write("upper threshold timeout : ");
-                //    Console.WriteLine(i);
-                //    continue;
-                //}
                 if (cross_upper_threshold != 0 && filtered_first_diff_signal[i] <= lower_threshold)
                 {
                     Console.Write("cross lower threshold after upper : ");
                     Console.WriteLine(i);
+                    if(blink_period_min > filtered_first_diff_signal[i])
+                    {
+                        blink_period_min = filtered_first_diff_signal[i];
+                    }
                     blink_detected = 1;
                     cross_lower_idx = i;
                     cross_lower_threshold = 1;
@@ -215,31 +250,35 @@ namespace WAT
                     Console.Write(blink_start_index);
                     Console.Write("  End   idx : ");
                     Console.WriteLine(i);
+                    if ((blink_period_max - blink_period_min) > (upper_threshold - lower_threshold) * 3)
+                    {
+                        blink_type = 2;
+                    }
+                    else blink_type = 1;
                     blink_end_index = i;
                     detect_timer = 99999999;
                     continue;
                 }
                 // 여기까지 blink detection
                 // 이후는 intended blink detection
-                if (blink_end_index != -1 && second_upper_threshold < filtered_first_diff_signal[i])
+                if (blink_end_index != -1 && second_upper_threshold < filtered_first_diff_signal[i] )
                 {
                     Console.Write("Second upper threshold : ");
                     Console.WriteLine(i);
                     cross_second_upper_threshold = 1;
                     continue;
                 }
-                if (blink_end_index != -1
-                    && cross_second_upper_threshold != 1
-                    && (i - cross_lower_idx) >= detect_time_limit
-                    && blink_type == 0)
-                {
-                    Console.Write("timeover : ");
-                    Console.WriteLine(i);
-                    blink_type = 1;
-                }
-                if (blink_end_index != -1 && cross_second_upper_threshold == 1 && blink_type == 0)
-                {
-                    blink_type = 2;
+                //if (blink_end_index != -1
+                //    && cross_second_upper_threshold != 1
+                //    && (i - cross_lower_idx) >= detect_time_limit
+                //    && blink_type == 0)
+                //{
+                //    Console.Write("timeover : ");
+                //    Console.WriteLine(i);
+                //    blink_type = 1;
+                //}
+                if (blink_end_index != -1 && cross_second_upper_threshold == 1)
+                { 
                     blink_end_index = i;
                 }
 
@@ -247,8 +286,11 @@ namespace WAT
                 {
                     Console.Write("set : ");
                     Console.WriteLine(i);
+
+                    Console.Write("blink_type : ");
+                    Console.WriteLine(blink_type);
                     if (blink_type == 0) blink_type = 1;
-                    for (int j = blink_start_index - 2; j <= blink_end_index + 2; j++)
+                    for (int j = blink_start_index; j <= blink_end_index ; j++)
                     {
                         blink_detect_result[j] = blink_type;
                     }
@@ -256,6 +298,8 @@ namespace WAT
                     cross_lower_threshold = 0;
                     cross_second_upper_threshold = 0;
                     cross_second_upeer_idx = 0;
+                    blink_period_max = 0;
+                    blink_period_min = inf;
                     blink_detected = 0;
                     blink_start_index = -1;
                     blink_end_index = -1;
@@ -279,6 +323,8 @@ namespace WAT
                     cross_lower_threshold = 0;
                     blink_detected = 0;
                     blink_start_index = -1;
+                    blink_period_max = 0;
+                    blink_period_min = inf;
                     blink_end_index = -1;
                     blink_type = 0;     // 1 == unintended, 2 = intended
                     cross_upper_idx = -1;
@@ -487,7 +533,6 @@ namespace WAT
 
 
     }
-    // EOG 미분 값 4개 받아서 평균 낸 뒤 입력 값으로 사용
     class NonlinearRegression
     {
         public void training(double[] eogDeltaValues, double[] trueDeltaValues)
@@ -501,41 +546,34 @@ namespace WAT
 
 
         // 모델 파라미터
-        static double weight1 = 0.5;
-        static double weight2 = 0.5;
-        static double weight3 = 0.5;
+        static double weight1 = 0.1;
 
         // 학습률
-        static double learningRate = 0.01;
+        static double learningRate = 0.0001;
 
         // 비선형 함수 (sin 함수)
-        static double NonlinearTransformation(double x)
-        {
-            return x * x;
-        }
+
 
         // 모델 학습 함수
-        public void TrainModel(double[] inputs, double[] targets, int epochs = 1000)
+        public void TrainModel(double[] eogValues, double[] trueDeltaValues, int epochs = 100)
         {
             for (int epoch = 0; epoch < epochs; epoch++)
             {
-                for (int i = 0; i < inputs.Length; i++)
+                for (int i = 0; i < eogValues.Length; i++)
                 {
-                    double prediction = predict(inputs[i]);
-                    double error = prediction - targets[i];
+                    double prediction = predict(eogValues[i]);
+                    double error = prediction - trueDeltaValues[i];
 
                     // 경사 하강법을 사용하여 가중치 업데이트
-                    weight1 -= learningRate * error * NonlinearTransformation(inputs[i]);
-                    weight2 -= learningRate * error * inputs[i];
-                    weight3 -= learningRate * error;
+                    weight1 -= learningRate * error * eogValues[i];
                 }
             }
         }
 
         // 새로운 입력에 대한 예측 함수
-        public double predict(double input)
+        public double predict(double eogValue)
         {
-            return weight1 * NonlinearTransformation(input) + weight2 * input + weight3;
+            return weight1 * eogValue;
         }
     }
 }

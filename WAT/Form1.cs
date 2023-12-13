@@ -159,8 +159,8 @@ namespace WAT
             if (flag == 1)
             {
                 //game pnt
-                game_pnt_X = [gamepnt1.Location.X, gamepnt2.Location.X, gamepnt3.Location.X, gamepnt4.Location.X, gamepnt5.Location.X, gamepnt6.Location.X, gamepnt7.Location.X, gamepnt8.Location.X, gamepnt9.Location.X, gamepnt10.Location.X ];
-                game_pnt_Y = [gamepnt1.Location.Y, gamepnt2.Location.Y, gamepnt3.Location.Y, gamepnt4.Location.Y, gamepnt5.Location.Y, gamepnt6.Location.Y, gamepnt7.Location.Y, gamepnt8.Location.Y, gamepnt9.Location.Y, gamepnt10.Location.Y];
+                game_pnt_X = new int[10] { gamepnt1.Location.X, gamepnt2.Location.X, gamepnt3.Location.X, gamepnt4.Location.X, gamepnt5.Location.X, gamepnt6.Location.X, gamepnt7.Location.X, gamepnt8.Location.X, gamepnt9.Location.X, gamepnt10.Location.X};
+                game_pnt_Y = new int[10] { gamepnt1.Location.Y, gamepnt2.Location.Y, gamepnt3.Location.Y, gamepnt4.Location.Y, gamepnt5.Location.Y, gamepnt6.Location.Y, gamepnt7.Location.Y, gamepnt8.Location.Y, gamepnt9.Location.Y, gamepnt10.Location.Y};
 
                 max_x = move_black.Location.X;
                 max_y = move_black.Location.Y;
