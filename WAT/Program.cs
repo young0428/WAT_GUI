@@ -250,7 +250,7 @@ namespace WAT
                     Console.Write(blink_start_index);
                     Console.Write("  End   idx : ");
                     Console.WriteLine(i);
-                    if ((blink_period_max - blink_period_min) > (upper_threshold - lower_threshold) * 3)
+                    if ((blink_period_max - blink_period_min) > (upper_threshold - lower_threshold) * 2.5)
                     {
                         blink_type = 2;
                     }

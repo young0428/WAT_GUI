@@ -692,10 +692,7 @@ namespace WAT
                             pos_delta_queue_x.Enqueue((int)horizontal_gaze_pos);
                             pos_delta_queue_y.Enqueue((int)vertical_gaze_pos);
 
-                            Console.Write("X pos : ");
-                            Console.WriteLine((int)horizontal_gaze_pos);
-                            Console.Write("Y pos : ");
-                            Console.WriteLine((int)vertical_gaze_pos);
+     
 
 
                         }
