@@ -570,6 +570,7 @@ namespace WAT
             this.gamepnt1 = new System.Windows.Forms.PictureBox();
             this.trackingbox = new System.Windows.Forms.PictureBox();
             this.tracking_delay = new System.Windows.Forms.Timer(this.components);
+            this.tracking_update_timer = new System.Windows.Forms.Timer(this.components);
             this.panel2.SuspendLayout();
             this.Tablepanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scope3)).BeginInit();
@@ -2127,6 +2128,10 @@ namespace WAT
             this.trackingbox.TabIndex = 10;
             this.trackingbox.TabStop = false;
             // 
+            // tracking_update_timer
+            // 
+            this.tracking_update_timer.Tick += new System.EventHandler(this.update_TrackingPosition);
+            // 
             // WAT
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -2218,6 +2223,7 @@ namespace WAT
         private System.Windows.Forms.PictureBox gamepnt9;
         private System.Windows.Forms.PictureBox trackingbox;
         private System.Windows.Forms.Timer tracking_delay;
+        private System.Windows.Forms.Timer tracking_update_timer;
     }
 }
 

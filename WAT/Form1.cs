@@ -306,6 +306,11 @@ namespace WAT
             tracking_delay.Stop();
         }
 
+        private void update_TrackingPosition(object sender, EventArgs e)
+        {
+            trackingbox.Location = new Point((int)horizontal_gaze_pos, (int)vertical_gaze_pos);
+        }
+
         private void move_timer(object sender, EventArgs e)
         {
             UpdateLocation();
@@ -734,7 +739,7 @@ namespace WAT
                             if (horizontal_gaze_pos > max_x) horizontal_gaze_pos = max_x;
                             else if (horizontal_gaze_pos < 0) horizontal_gaze_pos = 0;
 
-                            trackingbox.Location = new Point((int)horizontal_gaze_pos, (int)vertical_gaze_pos);
+                            
                             
 
                         }
