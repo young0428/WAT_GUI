@@ -497,7 +497,7 @@ namespace WAT
             horizontal_negative_ratio /= horizontal_negative_count;
 
             
-            //scope2.Channels[0].Data.SetYData(vertical_diff_result);
+            scope1.Channels[0].Data.SetYData(vertical_diff_result);
             scope3.Channels[0].Data.SetYData(horizontal_diff_result);
 
         }
