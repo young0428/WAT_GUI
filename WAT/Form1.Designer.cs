@@ -1355,7 +1355,7 @@ namespace WAT
             // 
             this.score1_text.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.score1_text.AutoSize = true;
-            this.score1_text.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.score1_text.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.score1_text.Location = new System.Drawing.Point(3, 21);
             this.score1_text.Name = "score1_text";
             this.score1_text.Size = new System.Drawing.Size(474, 32);
@@ -1367,7 +1367,7 @@ namespace WAT
             // 
             this.score2_text.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.score2_text.AutoSize = true;
-            this.score2_text.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.score2_text.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.score2_text.Location = new System.Drawing.Point(3, 95);
             this.score2_text.Name = "score2_text";
             this.score2_text.Size = new System.Drawing.Size(474, 32);
@@ -1379,7 +1379,7 @@ namespace WAT
             // 
             this.score3_text.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.score3_text.AutoSize = true;
-            this.score3_text.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.score3_text.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.score3_text.Location = new System.Drawing.Point(3, 169);
             this.score3_text.Name = "score3_text";
             this.score3_text.Size = new System.Drawing.Size(474, 32);
@@ -1391,7 +1391,7 @@ namespace WAT
             // 
             this.totalscore_text.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.totalscore_text.AutoSize = true;
-            this.totalscore_text.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.totalscore_text.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.totalscore_text.Location = new System.Drawing.Point(3, 244);
             this.totalscore_text.Name = "totalscore_text";
             this.totalscore_text.Size = new System.Drawing.Size(474, 32);
@@ -1450,7 +1450,7 @@ namespace WAT
             this.comment_text.Name = "comment_text";
             this.comment_text.Size = new System.Drawing.Size(971, 30);
             this.comment_text.TabIndex = 2;
-            this.comment_text.Text = "Comment";
+            this.comment_text.Text = "Comment :";
             this.comment_text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // game_timer

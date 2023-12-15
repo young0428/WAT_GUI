@@ -39,11 +39,11 @@ namespace WAT
         private int[] game_pnt_Y = new int[10];
 
         //Score
-        private double score_accuracy = 4;
-        private double score_timing = 7;
-        private double score_duration = 2;
+        private double score_accuracy = 8;
+        private double score_timing = 8;
+        private double score_duration = 8;
         private double score_total = 0;
-        private string[] comment = new string[5] { "Low Gaze Accuracy", "Wink Timing", "Wink duration", "Wink Genious!" };
+        private string[] comment = new string[5] { "Focus on improving your eye direction during the wink.", "Wink Timing", "Wink duration", "Good job overall! Your eye direction, timing, and duration of the wink are well-executed.", "Exceptional in every aspect! Your eye direction, wink timing, and duration are all outstanding." };
 
 
         //EOG data
@@ -212,11 +212,11 @@ namespace WAT
                 {
                     comment_text.Text += "\n" + comment[0];
                 }
-                if (score_duration < 5)
+                if (score_timing < 5)
                 {
                     comment_text.Text += "\n" + comment[1];
                 }
-                if (score_timing < 5)
+                if (score_duration < 5)
                 {
                     comment_text.Text += "\n" + comment[2];
                 }
