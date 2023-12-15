@@ -304,6 +304,8 @@ namespace WAT
             game_start_flag = 1;
             tracking_delay.Enabled = false;
             tracking_delay.Stop();
+            tracking_update_timer.Enabled = true;
+            tracking_update_timer.Start();
         }
 
         private void update_TrackingPosition(object sender, EventArgs e)
