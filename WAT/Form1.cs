@@ -323,7 +323,7 @@ namespace WAT
             if (pos_delta_queue_x.Count <= 0) return;
             trackingbox.Location = new Point((int)horizontal_gaze_pos, (int)vertical_gaze_pos);
 
-            scope2.Channels[0].Data.SetYData(realtime_diff_data_buffer_right_vertical);
+            //scope2.Channels[0].Data.SetYData(realtime_diff_data_buffer_right_vertical);
         }
 
         private void move_timer(object sender, EventArgs e)

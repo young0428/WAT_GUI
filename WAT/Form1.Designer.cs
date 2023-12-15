@@ -1613,7 +1613,7 @@ namespace WAT
             // 
             // gaze_timer
             // 
-            this.gaze_timer.Tick += new System.EventHandler(this.gaze_location_update_timer);
+            //this.gaze_timer.Tick += new System.EventHandler(this.gaze_location_update_timer);
             // 
             // WAT
             // 
