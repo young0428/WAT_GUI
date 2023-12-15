@@ -1260,7 +1260,7 @@ namespace WAT
             // sPort
             // 
             this.sPort.BaudRate = 115200;
-            this.sPort.PortName = "COM5";
+            this.sPort.PortName = "COM14";
             this.sPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.sPort_DataReceived);
             // 
             // timer5
@@ -1610,6 +1610,10 @@ namespace WAT
             // 
             this.tracking_update_timer.Interval = 200;
             this.tracking_update_timer.Tick += new System.EventHandler(this.update_TrackingPosition);
+            // 
+            // gaze_timer
+            // 
+            this.gaze_timer.Tick += new System.EventHandler(this.gaze_location_update_timer);
             // 
             // WAT
             // 
