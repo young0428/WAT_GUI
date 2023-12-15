@@ -148,7 +148,7 @@ namespace WAT
             //Calibration 1 
             // 점 따라가기
             if (flag == 2) {
-                sPort.Open();
+                //sPort.Open();
                 Tablepanel.Visible = false;
                 Cal2text.Visible = false;
                 move_black.BackColor = Color.Black;
@@ -189,6 +189,7 @@ namespace WAT
                 move_black.Visible = true;
                 move_black.Size = new Size(50, 50);
                 calibration_start_flag = 1;
+
                 return;
             }
 
@@ -221,10 +222,17 @@ namespace WAT
                 return;
             }
 
-            // End
+            // Result
             if (flag == 4)
             {
+                score_total = score_accuracy + score_duration + score_timing;
+                score1_text.Text = "Score1 : " + score_accuracy.ToString() + " / 10";
+                score2_text.Text = "Score2 : " + score_duration.ToString() + " / 10";
+                score3_text.Text = "Score3 : " + score_timing.ToString() + " / 10";
+                totalscore_text.Text = "Total Score : " + score_total.ToString() + " / 30";
+                scorelayout.Visible = true;
 
+                return;
             }
         }
         
@@ -234,7 +242,7 @@ namespace WAT
              //Calibration1
             if (flag == 2)
             {
-                ClearAndClosePort();
+                //ClearAndClosePort();
                 timer5.Enabled = false;
 
                 Tablepanel.Visible = false;
@@ -249,7 +257,7 @@ namespace WAT
             //Calibration2
             if (flag == 1)
             {
-                ClearAndClosePort();
+                //ClearAndClosePort();
                 timer5.Enabled = false;
 
                 Tablepanel.Visible = false;
