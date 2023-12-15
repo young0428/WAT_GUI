@@ -53,7 +53,11 @@ namespace WAT
 
             return gazePosition;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="signal"></param>
+        /// <returns></returns>
         // 1차 미분 계산
         public double[] Differential(double[] signal)
         {
