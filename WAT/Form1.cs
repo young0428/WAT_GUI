@@ -29,7 +29,7 @@ namespace WAT
 
         //Calibration 2
         private int cnt = 0;
-        private string[] img = new string[6] { @"C:\Users\Miri_73\Desktop\game_1.jpg", @"C:\Users\Miri_73\Desktop\game_2.jpg", @"C:\Users\Miri_73\Desktop\game_3.jpg", @"C:\Users\Miri_73\Desktop\game_4.jpg", @"C:\Users\Miri_73\Desktop\game_5.jpg", @"C:\Users\Miri_73\Desktop\gamebackground.jpg" };
+        private string[] img = new string[6] { @"C:\Users\dudgb\Desktop\asdf\game_1.jpg", @"C:\Users\dudgb\Desktop\asdf\game_2.jpg", @"C:\Users\dudgb\Desktop\asdf\game_3.jpg", @"C:\Users\dudgb\Desktop\asdf\game_4.jpg", @"C:\Users\dudgb\Desktop\asdf\game_5.jpg", @"C:\Users\dudgb\Desktop\asdf\gamebackground.jpg" };
 
         //Game
         private int img_cnt = 0;
@@ -89,8 +89,6 @@ namespace WAT
 
         SignalProcess signal_processor;
 
-
-
         double horizontal_peak_max, horizontal_peak_min;
         double baseline_ratio = 0.2;
         double horizontal_positive_ratio = 0;
@@ -102,6 +100,19 @@ namespace WAT
         double horizontal_upper_threshold_value, horizontal_lower_threshold_value;
         double vertical_gaze_pos, horizontal_gaze_pos;
         double vertical_peak_max, vertical_peak_min;
+
+        double vertical_eog_sum = 0;
+        double horizontal_eog_sum = 0;
+
+        double period_score_sum = 0;
+        double gaze_score_sum = 0;
+        double timing_score_sum = 0;
+        Queue<double> period_score, gaze_score, timing_score;
+        static Queue<double> recentValues_vertical = new Queue<double>();
+        static Queue<double> recentValues_horizontal= new Queue<double>();
+
+        ScoreCalculator score_cal;
+
 
         public struct EOG_position
         {
@@ -174,7 +185,7 @@ namespace WAT
 
                 max_x = move_black.Location.X;
                 max_y = move_black.Location.Y;
-                //sPort.Open();
+                sPort.Open();
                 timer5.Enabled = true;
 
                 Tablepanel.Visible = false;
@@ -255,7 +266,7 @@ namespace WAT
             }
             if (flag == 3)
             {
-                Game_Image.ImageLocation = @"C:\Users\Miri_73\Desktop\game_gamebackground.jpg";
+                Game_Image.ImageLocation = @"C:\Users\dudgb\Desktop\asdf\game_gamebackground.jpg";
                 img_cnt = 0;
                 game_timer.Enabled = false;
                 return;
@@ -267,20 +278,27 @@ namespace WAT
             if (img_cnt == 0)
             {
                 Game_Image.ImageLocation = img[5];
+                face_on_flag = 0;
             }
             else if ((img_cnt < 11)&&(img_cnt%2 == 1))
             {
+                
                 Game_Image.ImageLocation = img[(img_cnt-1)/2];
+                face_pos_x = game_pnt_X[(img_cnt - 1) / 2];
+                face_pos_y = game_pnt_Y[(img_cnt - 1) / 2];
+                face_on_flag = 1;
             }
             else if (img_cnt >10)
             {
                 Game_Image.ImageLocation = img[5];
                 btnNext.Visible = true;
                 game_timer.Enabled = false;
+                face_on_flag = 0;
             }
             else
             {
                 Game_Image.ImageLocation = img[5];
+                face_on_flag = 0;
             }
             img_cnt++;
         }
@@ -353,7 +371,7 @@ namespace WAT
             int[] blink_detection_result = signal_processor.BlinkDetection(filtered_vertical_diff_signal, vertical_peak_max, vertical_peak_min);
 
             //scope2.Channels[0].Data.SetYData(test_value);
-            //scope2.Channels[0].Data.SetYData(filtered_vertical_diff_signal);
+            scope1.Channels[0].Data.SetYData(filtered_vertical_diff_signal);
             scope3.Channels[0].Data.SetYData(blink_detection_result) ;
         }
         private void saccade_calibration()
@@ -679,7 +697,7 @@ namespace WAT
                                         {
                                             wink_end_idx = delay_idx + i;
                                             wink_start_idx += delay_idx;
-                                            int wink_idx_distance = realtime_data_buffsize - wink_start_idx;
+                                            int wink_idx_distance = face_on_counter - (realtime_data_buffsize - wink_start_idx);
                                             
                                             wink_period = (wink_end_idx - wink_start_idx) / sampling_rate;
                                             Console.Write("Wink Period : ");
@@ -694,8 +712,17 @@ namespace WAT
                                             Console.WriteLine(face_pos_y);
                                             Console.Write("Face Pos horizontal : ");
                                             Console.WriteLine(face_pos_x);
-                                            
 
+                                            period_score.Enqueue(score_cal.CalculatePeriodScore(wink_period));
+                                            timing_score.Enqueue(score_cal.CalculateTimingScore(wink_idx_distance / sampling_rate));
+
+                                            gaze_score.Enqueue(score_cal.CalculateGazeScore(
+                                                face_pos_x,
+                                                face_pos_y,
+                                                horizontal_gaze_pos,
+                                                vertical_gaze_pos
+                                                ));
+                                           
 
                                             face_on_counter = 0;
                                             face_on_flag = 0;
@@ -713,7 +740,52 @@ namespace WAT
                                 
                             }
 
-                           
+
+                            recentValues_vertical.Enqueue(delayed_vertical_diff);
+
+                            // Queue에 값이 10개 이상이면, 가장 오래된 값을 제거
+                            if (recentValues_vertical.Count > 10)
+                            {
+                                recentValues_vertical.Dequeue();
+                            }
+
+                            // 최근 10개 값의 합 계산
+                            double sumOfRecentValues = 0;
+                            foreach (double value in recentValues_vertical)
+                            {
+                                sumOfRecentValues += value;
+                            }
+
+                            // 최근 10개의 값의 합과 새로 들어온 값의 부호가 다르면 delayed_vertical_diff를 0으로 설정
+                            if (sumOfRecentValues * delayed_vertical_diff < 0)
+                            {
+                                double ratio = Math.Min(Math.Abs( delayed_vertical_diff / sumOfRecentValues),1);
+                                delayed_vertical_diff *= ratio;
+                            }
+
+                            recentValues_horizontal.Enqueue(delayed_horizontal_diff);
+
+                            // Queue에 값이 10개 이상이면, 가장 오래된 값을 제거
+                            if (recentValues_horizontal.Count > 10)
+                            {
+                                recentValues_horizontal.Dequeue();
+                            }
+
+                            // 최근 10개 값의 합 계산
+                            sumOfRecentValues = 0;
+                            foreach (double value in recentValues_horizontal)
+                            {
+                                sumOfRecentValues += value;
+                            }
+
+                            
+                            if (sumOfRecentValues * delayed_horizontal_diff < 0)
+                            {
+                                double ratio = Math.Min(Math.Abs(delayed_horizontal_diff / sumOfRecentValues), 1);
+                                delayed_horizontal_diff *= ratio;
+                            }
+
+
                             double vertical_delta_pos;
                             if (delayed_vertical_diff <= 0)
                             {
@@ -723,7 +795,7 @@ namespace WAT
                             {
                                 vertical_delta_pos = vertical_positive_ratio * delayed_vertical_diff;
                             }                                
-                            vertical_gaze_pos += vertical_delta_pos;
+                            
                             if (vertical_gaze_pos > max_y) vertical_gaze_pos = max_y;
                             else if(vertical_gaze_pos < 0) vertical_gaze_pos = 0;
 
@@ -737,12 +809,13 @@ namespace WAT
                             {
                                 horizontal_delta_pos = horizontal_positive_ratio * delayed_horizontal_diff;
                             }
-                            horizontal_gaze_pos += horizontal_delta_pos;
+                            
                             if (horizontal_gaze_pos > max_x) horizontal_gaze_pos = max_x;
                             else if (horizontal_gaze_pos < 0) horizontal_gaze_pos = 0;
 
                             
-                            
+                            vertical_gaze_pos += vertical_delta_pos;
+                            horizontal_gaze_pos += horizontal_delta_pos;
 
                         }
                         start_flag = 0;

@@ -533,6 +533,49 @@ namespace WAT
 
 
     }
+
+    class ScoreCalculator
+    {
+        public double CalculatePeriodScore(double wink_period)
+        {
+            double true_min = 0.2;
+            double true_max = 0.5;
+            if (wink_period < true_min)
+            {
+                return 20 * (1 - sigmoid(20*(true_min - wink_period))); //  0 ~ 0.5
+            }
+            if(wink_period > true_max)
+            {
+                return 20 * (1 - sigmoid(5 * (wink_period - true_max)));
+            }
+            return 10;
+        }
+        
+        public double CalculateTimingScore(double wink_timing)
+        {
+            double true_min = 0.3;
+            double true_max = 1;
+
+            if (wink_timing < true_min) return 20 * (1 - sigmoid(20 * (true_min - wink_timing))); //  0 ~ 0.5
+            if (wink_timing > true_max) return 20 * (1 - sigmoid(5 * (wink_timing - true_max)));
+            return 10;
+        }
+        public double CalculateGazeScore(double face_x, double face_y, double gaze_x, double gaze_y)
+        {
+            double diff_x = Math.Abs(face_x - gaze_x);
+            double diff_y = Math.Abs(face_y - gaze_y);
+            double square_size = 30;
+            double distance = Math.Sqrt(Math.Pow(diff_x, 2)+Math.Pow(diff_y, 2) );
+            return Convert.ToInt16(distance <= square_size)*10 ;
+
+        }
+
+
+        static double sigmoid(double x)
+        {
+            return 1 / (1 + Math.Exp(-x));
+        }
+    }
     class NonlinearRegression
     {
         public void training(double[] eogDeltaValues, double[] trueDeltaValues)
