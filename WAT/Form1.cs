@@ -38,15 +38,18 @@ namespace WAT
         private int[] game_pnt_X = new int[10];
         private int[] game_pnt_Y = new int[10];
 
-        //Score
-        private double score_accuracy = 8;
-        private double score_timing = 8;
-        private double score_duration = 8;
+        //score
+        private double score_accuracy = 0;
+        private double score_timing = 0;
+        private double score_duration = 0;
         private double score_total = 0;
         public int from_center_flag = 0;
         public int from_center_timer = 0;
-        private string[] comment = new string[5] { "Focus on improving your eye direction during the wink.", "Wink Timing", "Wink duration", "Good job overall! Your eye direction, timing, and duration of the wink are well-executed.", "Exceptional in every aspect! Your eye direction, wink timing, and duration are all outstanding." };
-
+        private string[] comment = new string[5] { "Focus on improving your eye direction during the wink.",
+            "A well-timed wink in a lighthearted moment can make all the difference. Choose your moments and have fun with it!",
+            "Consider thinking of winking as a brief pause rather than a full closure. It might help you maintain that distinctive winking look.",
+            "Good job overall! Your eye direction, timing, and duration of the wink are well-executed.",
+            "Exceptional in every aspect! Your eye direction, wink timing, and duration are all outstanding." };
 
         //EOG data
 
@@ -214,13 +217,54 @@ namespace WAT
                 move_black.Size = new Size(50, 50);
                 calibration_start_flag = 1;
 
+                return;
+            }
+
+            // game Start
+            if (flag == 3)
+            {
+                
+                Tablepanel.Visible = false;
+
+                ClearAndClosePort();
+                sPort.Open();
+                
+                Game_Panel.Visible = true;
+                
+                img_cnt = 0;
+
+                timer5.Enabled = true;
+                //Tablepanel.Visible=false;
+                Tablepanel.Visible = true;
+       
+
+
+                game_timer.Enabled = true;
+                vertical_gaze_pos = max_y / 2;
+                horizontal_gaze_pos = max_x / 2;
+                
+
+                trackingbox.BackColor = Color.Gray;
+                trackingbox.Location = new Point(max_x / 2, max_y / 2);
+                trackingbox.Size = new Size(50, 50);
+                trackingbox.Visible = true;
+                trackingbox.BringToFront();
+                Console.WriteLine("cal2 btn clicked");
+                tracking_delay.Enabled = true;
+                tracking_delay.Start();
+                return;
+            }
+
+            // Result
+            if (flag == 4)
+            {
                 score_total = score_accuracy + score_duration + score_timing;
                 score1_text.Text = "Gaze Accuracy Score : " + score_accuracy.ToString() + " / 10";
                 score2_text.Text = "Wink Duration Score : " + score_duration.ToString() + " / 10";
                 score3_text.Text = "Wink Timing Accuracy Score : " + score_timing.ToString() + " / 10";
                 totalscore_text.Text = "Total Score : " + score_total.ToString() + " / 30";
 
-                Series Game_Score_Series= chart1.Series["Game_Score"];
+                Series Game_Score_Series = chart1.Series["Game_Score"];
 
                 Game_Score_Series.Points.Clear();
 
@@ -251,60 +295,6 @@ namespace WAT
                 {
                     comment_text.Text += "\n" + comment[3];
                 }
-
-
-
-
-                scorelayout.Visible = false;
-
-                return;
-            }
-
-            // game Start
-            if (flag == 3)
-            {
-                
-                Tablepanel.Visible = false;
-
-                ClearAndClosePort();
-                sPort.Open();
-                
-                Game_Panel.Visible = true;
-                
-                img_cnt = 0;
-
-                timer5.Enabled = true;
-                //Tablepanel.Visible=false;
-                Tablepanel.Visible = true;
-                btnCalibration.Text = "End";
-
-
-                game_timer.Enabled = true;
-                vertical_gaze_pos = max_y / 2;
-                horizontal_gaze_pos = max_x / 2;
-                
-
-                trackingbox.BackColor = Color.Gray;
-                trackingbox.Location = new Point(max_x / 2, max_y / 2);
-                trackingbox.Size = new Size(50, 50);
-                trackingbox.Visible = true;
-                trackingbox.BringToFront();
-                Console.WriteLine("cal2 btn clicked");
-                tracking_delay.Enabled = true;
-                tracking_delay.Start();
-                return;
-            }
-
-            // Result
-            if (flag == 4)
-            {
-                score_total = score_accuracy + score_duration + score_timing;
-                score1_text.Text = "Gaze Accuracy Score : " + score_accuracy.ToString() + " / 10";
-                score2_text.Text = "Wink Duration Score : " + score_duration.ToString() + " / 10";
-                score3_text.Text = "Wink Timing Accuracy Score : " + score_timing.ToString() + " / 10";
-                totalscore_text.Text = "Total Score : " + score_total.ToString() + " / 30";
-
-                chart1.Legends.Clear();
 
                 scorelayout.Visible = true;
 
@@ -645,7 +635,7 @@ namespace WAT
                 Tablepanel.Visible = true;
                 return;
             }
-            
+
             if (flag == 3)
             {
                 btnReset.Visible = false;
