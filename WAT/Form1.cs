@@ -97,6 +97,8 @@ namespace WAT
         int face_pos_x = 0;
         int face_pos_y = 0;
         int to_center_count = 0;
+        int from_center_timer = 0;
+        int from_center_flag = 0;
 
         SignalProcess signal_processor;
 
@@ -236,7 +238,7 @@ namespace WAT
                 timer5.Enabled = true;
                 //Tablepanel.Visible=false;
                 Tablepanel.Visible = true;
-                btnCalibration.Text = "End";
+                //btnCalibration.Text = "End";
 
 
                 game_timer.Enabled = true;
@@ -765,7 +767,7 @@ namespace WAT
                             if(cross_threshold_flag == 1)
                             {
                                 
-                                double[] sliced_diff_signal = realtime_diff_data_buffer_right_vertical.Skip(realtime_data_buffsize - (delay_idx + 3)).ToArray();
+                                double[] sliced_diff_signal = realtime_diff_data_buffer_right_vertical.Skip(realtime_data_buffsize - (delay_idx)).ToArray();
                                 int[] blink_detection_result = signal_processor.BlinkDetection(sliced_diff_signal, vertical_peak_max, vertical_peak_min);
                                 
                                 for (int i=slice_start_idx; i <= slice_end_idx; i++)

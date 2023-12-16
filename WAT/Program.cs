@@ -32,7 +32,7 @@ namespace WAT
         public double second_upper_threshold;
         public double baseline_ratio = 0.2;
         public double threshold_ratio = 0.6;
-        public double second_threshold_ratio = 0.2;
+        public double second_threshold_ratio = 0.1;
         public int sampling_rate = 50;
         public double initial_value;
         public double blink_detect_period = 0.15;
@@ -248,6 +248,7 @@ namespace WAT
                     cross_lower_idx = i;
                     cross_lower_threshold = 1;
                     detect_timer = detect_time_limit;
+                    cross_second_upper_threshold = 0;
                     continue;
                 }
                 //if (cross_lower_threshold != 0 && filtered_first_diff_signal[i] >= lower_baseline_threshold && blink_end_index == -1)
@@ -276,7 +277,7 @@ namespace WAT
                 }
                 if (blink_end_index == -1
                     && cross_second_upper_threshold != 1
-                    && (i - cross_lower_idx) >= detect_time_limit
+                    && (i - cross_lower_idx) >= detect_time_limit*2
                     && blink_type == 0)
                 {
                     Console.Write("timeover : ");
