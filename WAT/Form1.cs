@@ -15,6 +15,7 @@ using System.IO.Ports;
 using System.IO;
 using System.Security.AccessControl;
 using System.Windows.Forms.DataVisualization.Charting;
+using Mitov.PlotLab;
 
 
 namespace WAT
@@ -108,7 +109,7 @@ namespace WAT
         double horizontal_upper_threshold_value, horizontal_lower_threshold_value;
         double vertical_gaze_pos, horizontal_gaze_pos;
         double vertical_peak_max, vertical_peak_min;
-
+        double gaze_pos_x_when_wink, gaze_pos_y_when_wink;
         double vertical_eog_sum = 0;
         double horizontal_eog_sum = 0;
 
@@ -158,7 +159,7 @@ namespace WAT
 
         public (int, int) Get_trackingBoxPosition()
         {
-            Console.WriteLine("Location Updated");
+            //Console.WriteLine("Location Updated");
             return (trackingbox.Location.X, trackingbox.Location.Y);
 
         }
@@ -288,8 +289,9 @@ namespace WAT
                 trackingbox.Location = new Point(max_x / 2, max_y / 2);
                 trackingbox.Size = new Size(50, 50);
                 trackingbox.Visible = true;
+                Game_Panel.Visible = false;
                 trackingbox.BringToFront();
-                Console.WriteLine("cal2 btn clicked");
+                //Console.WriteLine("cal2 btn clicked");
                 tracking_delay.Enabled = true;
                 tracking_delay.Start();
                 return;
@@ -404,12 +406,14 @@ namespace WAT
             tracking_delay.Stop();
             tracking_update_timer.Enabled = true;
             tracking_update_timer.Start();
-            Console.WriteLine("update_timer_start");
+            //Console.WriteLine("update_timer_start");
         }
 
         private void update_TrackingPosition(object sender, EventArgs e)
         {
             trackingbox.Location = new Point((int)horizontal_gaze_pos, (int)vertical_gaze_pos);
+            scope1.Channels[0].Data.SetYData(realtime_diff_data_buffer_right_vertical);
+            scope3.Channels[0].Data.SetYData(realtime_diff_data_buffer_horizontal);
         }
 
         private void gaze_location_update_timer(object sender, EventArgs e)
@@ -450,7 +454,7 @@ namespace WAT
             ClearAndClosePort();
             calibration_start_flag = 0;
 
-            //Console.Write("sac cal start");
+            ////Console.Write("sac cal start");
             saccade_calibration();
 
 
@@ -741,46 +745,51 @@ namespace WAT
                             realtime_diff_data_buffer_right_vertical[realtime_data_buffsize - 1] = vertical_diff;
                             realtime_diff_data_buffer_horizontal[realtime_data_buffsize - 1] = horizontal_diff;
 
-                            if (face_on_flag == 1)
-                            {
-                                face_on_counter++;
-                                if (face_on_counter >= delay_idx + 20)
-                                {
-                                    vertical_gaze_pos = face_pos_y;
-                                    horizontal_gaze_pos = face_pos_x;
-                                }
-                                if (face_on_counter >= delay_idx + 50)
-                                {
-                                    face_on_counter = 0;
-                                    face_on_flag = 0;
-                                }
-                                if(from_center_flag == 1)
-                                {
-                                    from_center_timer++;
-                                }
-                            }
+                            //if (face_on_flag == 1)
+                            //{
+                            //    face_on_counter++;
+                            //    if (face_on_counter >= delay_idx + 20)
+                            //    {
+                            //        vertical_gaze_pos = face_pos_y;
+                            //        horizontal_gaze_pos = face_pos_x;
+                            //    }
+                            //    if (face_on_counter >= delay_idx + 50)
+                            //    {
+                            //        face_on_counter = 0;
+                            //        face_on_flag = 0;
+                            //    }
+                            //    if(from_center_flag == 1)
+                            //    {
+                            //        from_center_timer++;
+                            //    }
+                            //}
 
                             int slice_start_idx = realtime_data_buffsize - (delay_idx + 2);
                             int slice_end_idx = realtime_data_buffsize - 1;
                             int wink_detected = 0;
                             int cross_threshold_flag = signal_processor.CheckCrossThreshold(
                                 delayed_vertical_diff, 
-                                vertical_peak_max * signal_processor.baseline_ratio*2,
-                                vertical_peak_min * signal_processor.baseline_ratio*2
+                                vertical_peak_max * signal_processor.baseline_ratio*1,
+                                vertical_peak_min * signal_processor.baseline_ratio*1
                                 );
+                            
                             if(cross_threshold_flag == 1)
                             {
                                 
-                                double[] sliced_diff_signal = realtime_diff_data_buffer_right_vertical.Skip(realtime_data_buffsize - (delay_idx + 2)).ToArray();
+                                double[] sliced_diff_signal = realtime_diff_data_buffer_right_vertical.Skip(realtime_data_buffsize - (delay_idx + 3)).ToArray();
                                 int[] blink_detection_result = signal_processor.BlinkDetection(sliced_diff_signal, vertical_peak_max, vertical_peak_min);
-                                for(int i=slice_start_idx; i <= slice_end_idx; i++)
+                                
+                                for (int i=slice_start_idx; i <= slice_end_idx; i++)
                                 {
                                     if (blink_detection_result[i-slice_start_idx] != 0)
                                     {
                                         realtime_diff_data_buffer_right_vertical[i] = 0;
                                         //realtime_diff_data_buffer_horizontal[i] = 0;
                                     }
-                                    if (blink_detection_result[i - slice_start_idx] == 2) wink_detected = 1;
+                                    if (blink_detection_result[i - slice_start_idx] == 2)
+                                    {
+                                        wink_detected = 1;
+                                    }
                                 }
                                 if (face_on_flag == 1 && wink_detected == 1)
                                 {
@@ -802,15 +811,62 @@ namespace WAT
                                             wink_start_idx += delay_idx;
                                             int wink_idx_distance = face_on_counter - (realtime_data_buffsize - wink_start_idx);
                                             
+
                                             wink_period = (wink_end_idx - wink_start_idx) / sampling_rate;
+
+                                            double min_x_when_wink = 999999;
+                                            double min_y_when_wink = 999999;
+                                            double max_x_when_wink = 0;
+                                            double max_y_when_wink = 0;
+                                            
+
+                                            foreach (double value in pos_x_before_wink)
+                                            {
+                                                if (value > max_x_when_wink) max_x_when_wink = value;
+                                                if (value <= min_x_when_wink) min_x_when_wink = value;
+                                            }
+
+                                            foreach (double value in pos_y_before_wink)
+                                            {
+                                                if (value > max_y_when_wink) max_y_when_wink = value;
+                                                if (value <= min_y_when_wink) min_y_when_wink = value;
+                                            }
+                                            
+                                            if((int)(img_cnt/2)==0)
+                                            {
+                                                gaze_pos_x_when_wink = min_x_when_wink;
+                                                gaze_pos_y_when_wink = min_y_when_wink;
+                                            }
+                                            else if((int)(img_cnt / 2) == 1)
+                                            {
+                                                gaze_pos_x_when_wink = (max_x_when_wink + min_x_when_wink)/2;
+                                                gaze_pos_y_when_wink = min_y_when_wink;
+                                            }
+                                            else if ((int)(img_cnt / 2) == 2)
+                                            {
+                                                gaze_pos_x_when_wink = max_x_when_wink;
+                                                gaze_pos_y_when_wink = min_y_when_wink;
+                                            }
+                                            else if ((int)(img_cnt / 2) == 3)
+                                            {
+                                                gaze_pos_x_when_wink = min_x_when_wink;
+                                                gaze_pos_y_when_wink = max_y_when_wink;
+                                            }
+                                            else if ((int)(img_cnt / 2) == 4)
+                                            {
+                                                gaze_pos_x_when_wink = max_x_when_wink;
+                                                gaze_pos_y_when_wink = max_y_when_wink;
+                                            }
+
+
                                             Console.Write("Wink Period : ");
                                             Console.WriteLine(wink_period);
                                             Console.Write("Wink Delayed idx : ");
                                             Console.WriteLine(wink_idx_distance);
                                             Console.Write("Gaze Pos vertical : ");
-                                            Console.WriteLine(vertical_gaze_pos);
+                                            Console.WriteLine(gaze_pos_y_when_wink);
                                             Console.Write("Gaze Pos horizontal : ");
-                                            Console.WriteLine(horizontal_gaze_pos);
+                                            Console.WriteLine(gaze_pos_x_when_wink);
                                             Console.Write("Face Pos vertical : ");
                                             Console.WriteLine(face_pos_y);
                                             Console.Write("Face Pos horizontal : ");
@@ -822,8 +878,8 @@ namespace WAT
                                             gaze_score.Enqueue(score_cal.CalculateGazeScore(
                                                 face_pos_x,
                                                 face_pos_y,
-                                                horizontal_gaze_pos,
-                                                vertical_gaze_pos
+                                                gaze_pos_x_when_wink,
+                                                gaze_pos_y_when_wink
                                                 ));
                                            
 
@@ -865,14 +921,6 @@ namespace WAT
                                     sumOfRecentValues += value;
                                 }
 
-                                //최근 10개의 값의 합과 새로 들어온 값의 부호가 다르면 delayed_vertical_diff를 0으로 설정
-                                //if (sumOfRecentValues * delayed_vertical_diff < 0)
-                                //{
-                                //    if (sumOfRecentValues > delayed_vertical_diff)
-                                //        delayed_vertical_diff = 0;
-                                //    else delayed_vertical_diff *= 0.2;
-                                //}
-                                
                                 recentValues_vertical.Enqueue(delayed_vertical_diff);
                             }
 
@@ -898,13 +946,6 @@ namespace WAT
                                     sumOfRecentValues += value;
                                 }
 
-
-                                //if (sumOfRecentValues * delayed_horizontal_diff < 0 && sumOfRecentValues > delayed_horizontal_diff)
-                                //{
-                                //    if (sumOfRecentValues > delayed_horizontal_diff)
-                                //        delayed_horizontal_diff = 0;
-                                //    else delayed_horizontal_diff *= 0.2;
-                                //}
                                 recentValues_horizontal.Enqueue(delayed_horizontal_diff);
                             }
 
@@ -934,16 +975,22 @@ namespace WAT
                             
                             if (horizontal_gaze_pos > max_x) horizontal_gaze_pos = max_x;
                             else if (horizontal_gaze_pos < 0) horizontal_gaze_pos = 0;
-                            Console.WriteLine("vertical");
-                            Console.WriteLine(vertical_delta_pos);
-                            Console.WriteLine("horizontal");
-                            Console.WriteLine(horizontal_delta_pos);
+                            //Console.WriteLine("vertical");
+                            //Console.WriteLine(vertical_delta_pos);
+                            //Console.WriteLine("horizontal");
+                            //Console.WriteLine(horizontal_delta_pos);
 
 
                             vertical_gaze_pos += vertical_delta_pos;
                             horizontal_gaze_pos += horizontal_delta_pos;
 
-                            
+                            pos_x_before_wink.Enqueue(horizontal_gaze_pos);
+                            pos_y_before_wink.Enqueue(vertical_gaze_pos);
+                            if (pos_x_before_wink.Count > memory_size) pos_x_before_wink.Dequeue();
+                            if (pos_y_before_wink.Count > memory_size) pos_y_before_wink.Dequeue();
+
+
+
 
 
                         }
@@ -991,7 +1038,7 @@ namespace WAT
             
             
             blink_calibration();
-            //Console.Write("Cal1 end");
+            ////Console.Write("Cal1 end");
 
         }
     }
