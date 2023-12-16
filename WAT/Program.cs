@@ -31,7 +31,7 @@ namespace WAT
         public double lower_baseline_threshold;
         public double second_upper_threshold;
         public double baseline_ratio = 0.2;
-        public double threshold_ratio = 0.5;
+        public double threshold_ratio = 0.6;
         public double second_threshold_ratio = 0.2;
         public int sampling_rate = 50;
         public double initial_value;
@@ -148,8 +148,9 @@ namespace WAT
             double upper_threshold = this.threshold_ratio * max_value;
             double second_upper_threshold = this.second_threshold_ratio * max_value;
             double lower_threshold = this.threshold_ratio * min_value;
-            double blink_detect_period = 0.3; // second
+            double blink_detect_period = 0.2; // second
             double blink_period_max = 0;
+            double second_sum = 0;
             double inf = 9999999;
             double blink_period_min = inf;
 
@@ -177,6 +178,7 @@ namespace WAT
             cross_lower_threshold = 0;
             int blink_type = 0;     // 1 == unintended, 2 = intended
             int blink_end = 0;
+   
 
             int cross_upper_idx = -1;
             int cross_lower_idx = -1;
@@ -264,7 +266,7 @@ namespace WAT
                     blink_detected = 1;
                     blink_end_index = i;
                     cross_second_upper_threshold = 1;
-                    if ((blink_period_max - blink_period_min) > (upper_threshold - lower_threshold) * 3)
+                    if ((blink_period_max - blink_period_min) > (upper_threshold - lower_threshold) * 2.1)
                     {
                         blink_type = 2;
                     }
@@ -284,6 +286,8 @@ namespace WAT
                 if (blink_end_index != -1 && cross_second_upper_threshold == 1 && second_upper_threshold < filtered_first_diff_signal[i])
                 { 
                     blink_end_index = i;
+                    second_sum += filtered_first_diff_signal[i];
+                    detect_timer = 99999;
                 }
 
                 if (blink_detected == 1 && (blink_type != 0 || i + 1 >= len))
@@ -296,6 +300,7 @@ namespace WAT
                     Console.Write("end idx : ");
                     Console.WriteLine(blink_end_index);
 
+                    
                     Console.Write("blink_type : ");
                     Console.WriteLine(blink_type);
                     if (blink_type == 0) blink_type = 1;

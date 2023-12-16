@@ -31,7 +31,7 @@ namespace WAT
 
         //Calibration 2
         private int cnt = 0;
-        private string[] img = new string[6] { @"C:\Users\dudgb\Desktop\asdf\game_1.jpg", @"C:\Users\dudgb\Desktop\asdf\game_2.jpg", @"C:\Users\dudgb\Desktop\asdf\game_3.jpg", @"C:\Users\dudgb\Desktop\asdf\game_4.jpg", @"C:\Users\dudgb\Desktop\asdf\game_5.jpg", @"C:\Users\dudgb\Desktop\asdf\gamebackground.jpg" };
+        private string[] img = new string[6] { @"C:\Users\dudgb\Desktop\asdf\game_1.jpg", @"C:\Users\dudgb\Desktop\asdf\game_2.jpg", @"C:\Users\dudgb\Desktop\asdf\game_3.jpg", @"C:\Users\dudgb\Desktop\asdf\game_4.jpg", @"C:\Users\dudgb\Desktop\asdf\game_5.jpg", @"C:\Users\dudgb\Desktop\asdf\game_gamebackground.jpg" };
 
         //Game
         private int img_cnt = 0;
@@ -43,6 +43,8 @@ namespace WAT
         private double score_timing = 8;
         private double score_duration = 8;
         private double score_total = 0;
+        public int from_center_flag = 0;
+        public int from_center_timer = 0;
         private string[] comment = new string[5] { "Focus on improving your eye direction during the wink.", "Wink Timing", "Wink duration", "Good job overall! Your eye direction, timing, and duration of the wink are well-executed.", "Exceptional in every aspect! Your eye direction, wink timing, and duration are all outstanding." };
 
 
@@ -119,6 +121,9 @@ namespace WAT
         Queue<double> timing_score= new Queue<double>();
         Queue<double> recentValues_vertical = new Queue<double>();
         Queue<double> recentValues_horizontal= new Queue<double>();
+        int memory_size = (int)(50 * 0.2);
+        Queue<double> pos_x_before_wink = new Queue<double>();
+        Queue<double> pos_y_before_wink = new Queue<double>();
 
         ScoreCalculator score_cal = new ScoreCalculator();
 
@@ -166,7 +171,7 @@ namespace WAT
             //Calibration 1 
             // 점 따라가기
             if (flag == 2) {
-                //sPort.Open();
+                sPort.Open();
                 Tablepanel.Visible = false;
                 Cal2text.Visible = false;
                 move_black.BackColor = Color.Black;
@@ -191,6 +196,7 @@ namespace WAT
             if (flag == 1)
             {
                 //game pnt
+                Game_Panel.Visible = false;
                 game_pnt_X = new int[10] { gamepnt1.Location.X, gamepnt2.Location.X, gamepnt3.Location.X, gamepnt4.Location.X, gamepnt5.Location.X, gamepnt6.Location.X, gamepnt7.Location.X, gamepnt8.Location.X, gamepnt9.Location.X, gamepnt10.Location.X};
                 game_pnt_Y = new int[10] { gamepnt1.Location.Y, gamepnt2.Location.Y, gamepnt3.Location.Y, gamepnt4.Location.Y, gamepnt5.Location.Y, gamepnt6.Location.Y, gamepnt7.Location.Y, gamepnt8.Location.Y, gamepnt9.Location.Y, gamepnt10.Location.Y};
 
@@ -249,7 +255,7 @@ namespace WAT
 
 
 
-                scorelayout.Visible = true;
+                scorelayout.Visible = false;
 
                 return;
             }
@@ -263,7 +269,7 @@ namespace WAT
                 ClearAndClosePort();
                 sPort.Open();
                 
-                //Game_Panel.Visible = true;
+                Game_Panel.Visible = true;
                 
                 img_cnt = 0;
 
@@ -359,6 +365,8 @@ namespace WAT
                 face_pos_x = game_pnt_X[(img_cnt - 1) / 2];
                 face_pos_y = game_pnt_Y[(img_cnt - 1) / 2];
                 face_on_flag = 1;
+                move_to_center_timer.Enabled = true;
+                move_to_center_timer.Start();
             }
             else if (img_cnt >10)
             {
@@ -410,6 +418,16 @@ namespace WAT
             trackingbox.Location = new Point((int)horizontal_gaze_pos, (int)vertical_gaze_pos);
 
             //scope2.Channels[0].Data.SetYData(realtime_diff_data_buffer_right_vertical);
+        }
+
+        private void move_to_center_timer_Tick(object sender, EventArgs e)
+        {
+            horizontal_gaze_pos = (int)(max_x / 2);
+            vertical_gaze_pos = (int)(max_y / 2);
+            move_to_center_timer.Enabled = false;
+            move_to_center_timer.Stop();
+            from_center_timer = 0;
+            from_center_flag = 1;
         }
 
         private void move_timer(object sender, EventArgs e)
@@ -736,6 +754,10 @@ namespace WAT
                                     face_on_counter = 0;
                                     face_on_flag = 0;
                                 }
+                                if(from_center_flag == 1)
+                                {
+                                    from_center_timer++;
+                                }
                             }
 
                             int slice_start_idx = realtime_data_buffsize - (delay_idx + 2);
@@ -821,7 +843,7 @@ namespace WAT
                                 
                             }
 
-
+                            
                             cross_threshold_flag = signal_processor.CheckCrossThreshold(
                                 delayed_vertical_diff,
                                 vertical_peak_max * signal_processor.baseline_ratio ,
@@ -920,6 +942,9 @@ namespace WAT
 
                             vertical_gaze_pos += vertical_delta_pos;
                             horizontal_gaze_pos += horizontal_delta_pos;
+
+                            
+
 
                         }
                         start_flag = 0;
