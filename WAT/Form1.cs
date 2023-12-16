@@ -14,6 +14,8 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using System.IO;
 using System.Security.AccessControl;
+using System.Windows.Forms.DataVisualization.Charting;
+
 
 namespace WAT
 {
@@ -37,11 +39,11 @@ namespace WAT
         private int[] game_pnt_Y = new int[10];
 
         //Score
-        private int score_accuracy = 0;
-        private int score_timing = 0;
-        private int score_duration = 0;
-        private int score_total = 0;
-        private string[] comment = new string[4] { "Low Gaze Accuracy", "Wink Timing", "Wink duration", "Wink Genious!" };
+        private double score_accuracy = 8;
+        private double score_timing = 8;
+        private double score_duration = 8;
+        private double score_total = 0;
+        private string[] comment = new string[5] { "Focus on improving your eye direction during the wink.", "Wink Timing", "Wink duration", "Good job overall! Your eye direction, timing, and duration of the wink are well-executed.", "Exceptional in every aspect! Your eye direction, wink timing, and duration are all outstanding." };
 
 
         //EOG data
@@ -56,14 +58,14 @@ namespace WAT
         int data_count = 0;
         int cali_top = 0;
         int Data_1, Data_2, Data_3;
-        int sampling_rate = 50;
+        int sampling_rate = 100;
         int game_start_flag = 0;
         int count = 0;
         double delay = 0.2; // sec
-        static int delay_idx = (int)(0.3 * 100);
+        static int delay_idx = (int)(0.2 * 50);
 
         public int[] data_buff = new int[1200];
-        public static int buffsize = 1200;
+        public static int buffsize = 12*4*100;
         public double[] data_left_vertical = new double[buffsize];
         public double[] data_right_vertical = new double[buffsize];
         public double[] data_horizontal = new double[buffsize];
@@ -72,13 +74,16 @@ namespace WAT
         double[] calibration_data_horizontal = new double[buffsize];
         double[] saccade_calibration_data_right_vertical = new double[buffsize];
         double[] saccade_calibration_data_horizontal= new double[buffsize];
-        static int realtime_data_buffsize = 100;
+        static int realtime_data_buffsize = 300;
         double[] realtime_data_buffer_left_vertical = new double[realtime_data_buffsize];
         double[] realtime_data_buffer_right_vertical = new double[realtime_data_buffsize];
         double[] realtime_data_buffer_horizontal = new double[realtime_data_buffsize];
         double[] realtime_diff_data_buffer_left_vertical = new double[realtime_data_buffsize];
         double[] realtime_diff_data_buffer_right_vertical = new double[realtime_data_buffsize];
         double[] realtime_diff_data_buffer_horizontal = new double[realtime_data_buffsize];
+
+        Queue<int> pos_delta_queue_x = new Queue<int>();
+        Queue<int> pos_delta_queue_y = new Queue<int>();
 
         int saccade_top = 0;
         
@@ -161,7 +166,7 @@ namespace WAT
             //Calibration 1 
             // 점 따라가기
             if (flag == 2) {
-                sPort.Open();
+                //sPort.Open();
                 Tablepanel.Visible = false;
                 Cal2text.Visible = false;
                 move_black.BackColor = Color.Black;
@@ -202,6 +207,50 @@ namespace WAT
                 move_black.Visible = true;
                 move_black.Size = new Size(50, 50);
                 calibration_start_flag = 1;
+
+                score_total = score_accuracy + score_duration + score_timing;
+                score1_text.Text = "Gaze Accuracy Score : " + score_accuracy.ToString() + " / 10";
+                score2_text.Text = "Wink Duration Score : " + score_duration.ToString() + " / 10";
+                score3_text.Text = "Wink Timing Accuracy Score : " + score_timing.ToString() + " / 10";
+                totalscore_text.Text = "Total Score : " + score_total.ToString() + " / 30";
+
+                Series Game_Score_Series= chart1.Series["Game_Score"];
+
+                Game_Score_Series.Points.Clear();
+
+                // 각 변수에 대한 데이터 추가
+                Game_Score_Series.Points.AddXY("Gaze Accuracy", score_accuracy);
+                Game_Score_Series.Points.AddXY("Wink Duration", score_duration);
+                Game_Score_Series.Points.AddXY("Wink Timing Accuracy", score_timing);
+
+                chart1.Legends.Clear();
+
+                if (score_accuracy < 5)
+                {
+                    comment_text.Text += "\n" + comment[0];
+                }
+                if (score_timing < 5)
+                {
+                    comment_text.Text += "\n" + comment[1];
+                }
+                if (score_duration < 5)
+                {
+                    comment_text.Text += "\n" + comment[2];
+                }
+                if ((score_accuracy >= 8) && (score_duration >= 8) && (score_timing >= 8))
+                {
+                    comment_text.Text += "\n" + comment[4];
+                }
+                else if ((score_accuracy >= 5) && (score_duration >= 5) && (score_timing >= 5))
+                {
+                    comment_text.Text += "\n" + comment[3];
+                }
+
+
+
+
+                scorelayout.Visible = true;
+
                 return;
             }
 
@@ -240,10 +289,20 @@ namespace WAT
                 return;
             }
 
-            // End
+            // Result
             if (flag == 4)
             {
+                score_total = score_accuracy + score_duration + score_timing;
+                score1_text.Text = "Gaze Accuracy Score : " + score_accuracy.ToString() + " / 10";
+                score2_text.Text = "Wink Duration Score : " + score_duration.ToString() + " / 10";
+                score3_text.Text = "Wink Timing Accuracy Score : " + score_timing.ToString() + " / 10";
+                totalscore_text.Text = "Total Score : " + score_total.ToString() + " / 30";
 
+                chart1.Legends.Clear();
+
+                scorelayout.Visible = true;
+
+                return;
             }
         }
         
@@ -253,7 +312,7 @@ namespace WAT
              //Calibration1
             if (flag == 2)
             {
-                ClearAndClosePort();
+                //ClearAndClosePort();
                 timer5.Enabled = false;
 
                 Tablepanel.Visible = false;
@@ -268,7 +327,7 @@ namespace WAT
             //Calibration2
             if (flag == 1)
             {
-                ClearAndClosePort();
+                //ClearAndClosePort();
                 timer5.Enabled = false;
 
                 Tablepanel.Visible = false;
@@ -342,17 +401,15 @@ namespace WAT
 
         private void update_TrackingPosition(object sender, EventArgs e)
         {
-            //to_center_count++;
-            //if(to_center_count > 60)
-            //{
-            //    to_center_count = 0;
-            //    horizontal_gaze_pos = max_x / 2;
-            //    vertical_gaze_pos = max_y / 2;
-            //}
             trackingbox.Location = new Point((int)horizontal_gaze_pos, (int)vertical_gaze_pos);
-            scope1.Channels[0].Data.SetYData(realtime_diff_data_buffer_right_vertical );
-            scope3.Channels[0].Data.SetYData(realtime_diff_data_buffer_horizontal);
+        }
 
+        private void gaze_location_update_timer(object sender, EventArgs e)
+        {
+            if (pos_delta_queue_x.Count <= 0) return;
+            trackingbox.Location = new Point((int)horizontal_gaze_pos, (int)vertical_gaze_pos);
+
+            //scope2.Channels[0].Data.SetYData(realtime_diff_data_buffer_right_vertical);
         }
 
         private void move_timer(object sender, EventArgs e)
@@ -375,7 +432,7 @@ namespace WAT
             ClearAndClosePort();
             calibration_start_flag = 0;
 
-            Console.Write("sac cal start");
+            //Console.Write("sac cal start");
             saccade_calibration();
 
 
@@ -476,10 +533,10 @@ namespace WAT
             vertical_positive_ratio /= vertical_positive_count;
             vertical_negative_ratio /= vertical_negative_count;
 
-            Console.Write("positive ratio : ");
-            Console.WriteLine(vertical_positive_ratio);
-            Console.Write("negative ratio : ");
-            Console.WriteLine(vertical_negative_ratio);
+            //Console.Write("positive ratio : ");
+            //Console.WriteLine(vertical_positive_ratio);
+            //Console.Write("negative ratio : ");
+            //Console.WriteLine(vertical_negative_ratio);
            
             saccade_calibration_data_horizontal = saccade_calibration_data_horizontal.Take(saccade_top).ToArray();
             double[] horizontal_diff_result = signal_processor.Differential(saccade_calibration_data_horizontal);
@@ -752,8 +809,8 @@ namespace WAT
                                             face_on_flag = 0;
 
 
-                                            vertical_gaze_pos = face_pos_y ;
-                                            horizontal_gaze_pos = face_pos_x;
+                                            //vertical_gaze_pos = face_pos_y;
+                                            //horizontal_gaze_pos = face_pos_x;
 
                                             current_state = 0;
                                             break;
@@ -878,8 +935,8 @@ namespace WAT
 
         private void On_timer(object sender, EventArgs e)
         {
-            //scope2.Channels[0].Data.SetYData(data_right_vertical);
-            //scope3.Channels[0].Data.SetYData(calibration_data_right_vertical);
+            //scope2.Channels[0].Data.SetYData(calibration_data_right_vertical);
+            //scope3.Channels[0].Data.SetYData();
         }
 
         private void Calibration2_Timer(object sender, EventArgs e)
@@ -909,7 +966,7 @@ namespace WAT
             
             
             blink_calibration();
-            Console.Write("Cal1 end");
+            //Console.Write("Cal1 end");
 
         }
     }
