@@ -1443,13 +1443,12 @@ namespace WAT
             this.comment_text.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comment_text.AutoSize = true;
-            this.comment_text.Font = new System.Drawing.Font("굴림", 15F, System.Drawing.FontStyle.Bold);
+            this.comment_text.Font = new System.Drawing.Font("굴림", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.comment_text.Location = new System.Drawing.Point(3, 413);
             this.comment_text.Name = "comment_text";
-            this.comment_text.Size = new System.Drawing.Size(971, 30);
+            this.comment_text.Size = new System.Drawing.Size(971, 26);
             this.comment_text.TabIndex = 2;
             this.comment_text.Text = "Comment :";
-            this.comment_text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // game_timer
             // 

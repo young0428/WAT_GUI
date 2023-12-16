@@ -40,13 +40,15 @@ namespace WAT
         private int[] game_pnt_Y = new int[10];
 
         //Score
-        private double score_accuracy = 8;
-        private double score_timing = 8;
-        private double score_duration = 8;
+        private double score_accuracy = 0;
+        private double score_timing = 0;
+        private double score_duration = 0;
         private double score_total = 0;
-        public int from_center_flag = 0;
-        public int from_center_timer = 0;
-        private string[] comment = new string[5] { "Focus on improving your eye direction during the wink.", "Wink Timing", "Wink duration", "Good job overall! Your eye direction, timing, and duration of the wink are well-executed.", "Exceptional in every aspect! Your eye direction, wink timing, and duration are all outstanding." };
+        private string[] comment = new string[5] { "Focus on improving your eye direction during the wink.", 
+            "A well-timed wink in a lighthearted moment can make all the difference. Choose your moments and have fun with it!", 
+            "Consider thinking of winking as a brief pause rather than a full closure. It might help you maintain that distinctive winking look.", 
+            "Good job overall! Your eye direction, timing, and duration of the wink are well-executed.", 
+            "Exceptional in every aspect! Your eye direction, wink timing, and duration are all outstanding." };
 
 
         //EOG data
@@ -215,49 +217,6 @@ namespace WAT
                 move_black.Size = new Size(50, 50);
                 calibration_start_flag = 1;
 
-                score_total = score_accuracy + score_duration + score_timing;
-                score1_text.Text = "Gaze Accuracy Score : " + score_accuracy.ToString() + " / 10";
-                score2_text.Text = "Wink Duration Score : " + score_duration.ToString() + " / 10";
-                score3_text.Text = "Wink Timing Accuracy Score : " + score_timing.ToString() + " / 10";
-                totalscore_text.Text = "Total Score : " + score_total.ToString() + " / 30";
-
-                Series Game_Score_Series= chart1.Series["Game_Score"];
-
-                Game_Score_Series.Points.Clear();
-
-                // 각 변수에 대한 데이터 추가
-                Game_Score_Series.Points.AddXY("Gaze Accuracy", score_accuracy);
-                Game_Score_Series.Points.AddXY("Wink Duration", score_duration);
-                Game_Score_Series.Points.AddXY("Wink Timing Accuracy", score_timing);
-
-                chart1.Legends.Clear();
-
-                if (score_accuracy < 5)
-                {
-                    comment_text.Text += "\n" + comment[0];
-                }
-                if (score_timing < 5)
-                {
-                    comment_text.Text += "\n" + comment[1];
-                }
-                if (score_duration < 5)
-                {
-                    comment_text.Text += "\n" + comment[2];
-                }
-                if ((score_accuracy >= 8) && (score_duration >= 8) && (score_timing >= 8))
-                {
-                    comment_text.Text += "\n" + comment[4];
-                }
-                else if ((score_accuracy >= 5) && (score_duration >= 5) && (score_timing >= 5))
-                {
-                    comment_text.Text += "\n" + comment[3];
-                }
-
-
-
-
-                scorelayout.Visible = false;
-
                 return;
             }
 
@@ -306,7 +265,37 @@ namespace WAT
                 score3_text.Text = "Wink Timing Accuracy Score : " + score_timing.ToString() + " / 10";
                 totalscore_text.Text = "Total Score : " + score_total.ToString() + " / 30";
 
+                Series Game_Score_Series = chart1.Series["Game_Score"];
+
+                Game_Score_Series.Points.Clear();
+
+                // 각 변수에 대한 데이터 추가
+                Game_Score_Series.Points.AddXY("Gaze Accuracy", score_accuracy);
+                Game_Score_Series.Points.AddXY("Wink Duration", score_duration);
+                Game_Score_Series.Points.AddXY("Wink Timing Accuracy", score_timing);
+
                 chart1.Legends.Clear();
+
+                if (score_accuracy < 5)
+                {
+                    comment_text.Text += "\n" + comment[0];
+                }
+                if (score_timing < 5)
+                {
+                    comment_text.Text += "\n" + comment[1];
+                }
+                if (score_duration < 5)
+                {
+                    comment_text.Text += "\n" + comment[2];
+                }
+                if ((score_accuracy >= 8) && (score_duration >= 8) && (score_timing >= 8))
+                {
+                    comment_text.Text += "\n" + comment[4];
+                }
+                else if ((score_accuracy >= 5) && (score_duration >= 5) && (score_timing >= 5))
+                {
+                    comment_text.Text += "\n" + comment[3];
+                }
 
                 scorelayout.Visible = true;
 
