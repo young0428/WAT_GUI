@@ -217,7 +217,6 @@ namespace WAT
 
                 timer5.Enabled = true;
                 Tablepanel.Visible=false;
-                btnCalibration.Text = "End";
                 
                 vertical_gaze_pos = max_y / 2;
                 horizontal_gaze_pos = max_x / 2;
