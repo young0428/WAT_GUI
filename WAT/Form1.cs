@@ -86,6 +86,7 @@ namespace WAT
         int face_on_counter = 0;
         int face_pos_x = 0;
         int face_pos_y = 0;
+        int to_center_count = 0;
 
         SignalProcess signal_processor;
 
@@ -107,11 +108,14 @@ namespace WAT
         double period_score_sum = 0;
         double gaze_score_sum = 0;
         double timing_score_sum = 0;
-        Queue<double> period_score, gaze_score, timing_score;
-        static Queue<double> recentValues_vertical = new Queue<double>();
-        static Queue<double> recentValues_horizontal= new Queue<double>();
+        int adaption_num = 40;
+        Queue<double> period_score = new Queue<double>();
+        Queue<double> gaze_score = new Queue<double>();
+        Queue<double> timing_score= new Queue<double>();
+        Queue<double> recentValues_vertical = new Queue<double>();
+        Queue<double> recentValues_horizontal= new Queue<double>();
 
-        ScoreCalculator score_cal;
+        ScoreCalculator score_cal = new ScoreCalculator();
 
 
         public struct EOG_position
@@ -144,7 +148,9 @@ namespace WAT
 
         public (int, int) Get_trackingBoxPosition()
         {
+            Console.WriteLine("Location Updated");
             return (trackingbox.Location.X, trackingbox.Location.Y);
+
         }
       
 
@@ -202,26 +208,33 @@ namespace WAT
             // game Start
             if (flag == 3)
             {
-                trackingbox.BackColor = Color.Black;
-                trackingbox.Location = new Point(max_x / 2, max_y / 2);
-                trackingbox.Size = new Size(30, 30);
-                trackingbox.Visible = true;
-
+                
                 Tablepanel.Visible = false;
 
                 ClearAndClosePort();
                 sPort.Open();
-                //sPort.Open();
-                Game_Panel.Visible = true;
-                game_timer.Enabled = true;
+                
+                //Game_Panel.Visible = true;
+                
                 img_cnt = 0;
 
                 timer5.Enabled = true;
-                Tablepanel.Visible=false;
+                //Tablepanel.Visible=false;
+                Tablepanel.Visible = true;
                 btnCalibration.Text = "End";
-                
+
+
+                game_timer.Enabled = true;
                 vertical_gaze_pos = max_y / 2;
                 horizontal_gaze_pos = max_x / 2;
+                
+
+                trackingbox.BackColor = Color.Gray;
+                trackingbox.Location = new Point(max_x / 2, max_y / 2);
+                trackingbox.Size = new Size(50, 50);
+                trackingbox.Visible = true;
+                trackingbox.BringToFront();
+                Console.WriteLine("cal2 btn clicked");
                 tracking_delay.Enabled = true;
                 tracking_delay.Start();
                 return;
@@ -324,11 +337,22 @@ namespace WAT
             tracking_delay.Stop();
             tracking_update_timer.Enabled = true;
             tracking_update_timer.Start();
+            Console.WriteLine("update_timer_start");
         }
 
         private void update_TrackingPosition(object sender, EventArgs e)
         {
+            //to_center_count++;
+            //if(to_center_count > 60)
+            //{
+            //    to_center_count = 0;
+            //    horizontal_gaze_pos = max_x / 2;
+            //    vertical_gaze_pos = max_y / 2;
+            //}
             trackingbox.Location = new Point((int)horizontal_gaze_pos, (int)vertical_gaze_pos);
+            scope1.Channels[0].Data.SetYData(realtime_diff_data_buffer_right_vertical );
+            scope3.Channels[0].Data.SetYData(realtime_diff_data_buffer_horizontal);
+
         }
 
         private void move_timer(object sender, EventArgs e)
@@ -635,8 +659,8 @@ namespace WAT
                             }
                             realtime_data_buffer_right_vertical[realtime_data_buffsize - 1] = Data_1;
                             realtime_data_buffer_horizontal[realtime_data_buffsize - 1] = Data_2;
-                            double vertical_diff = Data_1 - realtime_diff_data_buffer_right_vertical[realtime_data_buffsize - 2];
-                            double horizontal_diff = Data_2 - realtime_diff_data_buffer_horizontal[realtime_data_buffsize - 2];
+                            double vertical_diff = Data_1 - realtime_data_buffer_right_vertical[realtime_data_buffsize - 2];
+                            double horizontal_diff = Data_2 - realtime_data_buffer_horizontal[realtime_data_buffsize - 2];
                             double delayed_vertical_diff = realtime_diff_data_buffer_right_vertical[realtime_data_buffsize - delay_idx];
                             double delayed_horizontal_diff = realtime_diff_data_buffer_horizontal[realtime_data_buffsize - delay_idx];
                             realtime_diff_data_buffer_right_vertical[realtime_data_buffsize - 1] = vertical_diff;
@@ -662,15 +686,15 @@ namespace WAT
                             int wink_detected = 0;
                             int cross_threshold_flag = signal_processor.CheckCrossThreshold(
                                 delayed_vertical_diff, 
-                                vertical_peak_max * signal_processor.baseline_ratio,
-                                vertical_peak_min * signal_processor.baseline_ratio
+                                vertical_peak_max * signal_processor.baseline_ratio*2,
+                                vertical_peak_min * signal_processor.baseline_ratio*2
                                 );
                             if(cross_threshold_flag == 1)
                             {
                                 
                                 double[] sliced_diff_signal = realtime_diff_data_buffer_right_vertical.Skip(realtime_data_buffsize - (delay_idx + 2)).ToArray();
                                 int[] blink_detection_result = signal_processor.BlinkDetection(sliced_diff_signal, vertical_peak_max, vertical_peak_min);
-                                for(int i=slice_start_idx-1; i <= slice_end_idx; i++)
+                                for(int i=slice_start_idx; i <= slice_end_idx; i++)
                                 {
                                     if (blink_detection_result[i-slice_start_idx] != 0)
                                     {
@@ -728,7 +752,7 @@ namespace WAT
                                             face_on_flag = 0;
 
 
-                                            vertical_gaze_pos = face_pos_y;
+                                            vertical_gaze_pos = face_pos_y ;
                                             horizontal_gaze_pos = face_pos_x;
 
                                             current_state = 0;
@@ -741,50 +765,69 @@ namespace WAT
                             }
 
 
-                            recentValues_vertical.Enqueue(delayed_vertical_diff);
-
-                            // Queue에 값이 10개 이상이면, 가장 오래된 값을 제거
-                            if (recentValues_vertical.Count > 10)
-                            {
-                                recentValues_vertical.Dequeue();
-                            }
-
-                            // 최근 10개 값의 합 계산
+                            cross_threshold_flag = signal_processor.CheckCrossThreshold(
+                                delayed_vertical_diff,
+                                vertical_peak_max * signal_processor.baseline_ratio ,
+                                vertical_peak_min * signal_processor.baseline_ratio
+                                );
                             double sumOfRecentValues = 0;
-                            foreach (double value in recentValues_vertical)
+                            if (cross_threshold_flag == 1 || cross_threshold_flag == 2)
                             {
-                                sumOfRecentValues += value;
+                                // Queue에 값이 10개 이상이면, 가장 오래된 값을 제거
+                                if (recentValues_vertical.Count > adaption_num)
+                                {
+                                    recentValues_vertical.Dequeue();
+                                }
+
+                                // 최근 10개 값의 합 계산
+                                
+                                foreach (double value in recentValues_vertical)
+                                {
+                                    sumOfRecentValues += value;
+                                }
+
+                                //최근 10개의 값의 합과 새로 들어온 값의 부호가 다르면 delayed_vertical_diff를 0으로 설정
+                                //if (sumOfRecentValues * delayed_vertical_diff < 0)
+                                //{
+                                //    if (sumOfRecentValues > delayed_vertical_diff)
+                                //        delayed_vertical_diff = 0;
+                                //    else delayed_vertical_diff *= 0.2;
+                                //}
+                                
+                                recentValues_vertical.Enqueue(delayed_vertical_diff);
                             }
 
-                            // 최근 10개의 값의 합과 새로 들어온 값의 부호가 다르면 delayed_vertical_diff를 0으로 설정
-                            if (sumOfRecentValues * delayed_vertical_diff < 0)
+
+                            cross_threshold_flag = signal_processor.CheckCrossThreshold(
+                                delayed_vertical_diff,
+                                horizontal_peak_max * signal_processor.baseline_ratio ,
+                                horizontal_peak_min * signal_processor.baseline_ratio 
+                                );
+                            if (cross_threshold_flag == 1 || cross_threshold_flag == 2)
                             {
-                                double ratio = Math.Min(Math.Abs( delayed_vertical_diff / sumOfRecentValues),1);
-                                delayed_vertical_diff *= ratio;
+                                sumOfRecentValues = 0;
+                                // Queue에 값이 10개 이상이면, 가장 오래된 값을 제거
+                                if (recentValues_horizontal.Count > adaption_num)
+                                {
+                                    recentValues_horizontal.Dequeue();
+                                }
+
+                                // 최근 10개 값의 합 계산
+
+                                foreach (double value in recentValues_horizontal)
+                                {
+                                    sumOfRecentValues += value;
+                                }
+
+
+                                //if (sumOfRecentValues * delayed_horizontal_diff < 0 && sumOfRecentValues > delayed_horizontal_diff)
+                                //{
+                                //    if (sumOfRecentValues > delayed_horizontal_diff)
+                                //        delayed_horizontal_diff = 0;
+                                //    else delayed_horizontal_diff *= 0.2;
+                                //}
+                                recentValues_horizontal.Enqueue(delayed_horizontal_diff);
                             }
-
-                            recentValues_horizontal.Enqueue(delayed_horizontal_diff);
-
-                            // Queue에 값이 10개 이상이면, 가장 오래된 값을 제거
-                            if (recentValues_horizontal.Count > 10)
-                            {
-                                recentValues_horizontal.Dequeue();
-                            }
-
-                            // 최근 10개 값의 합 계산
-                            sumOfRecentValues = 0;
-                            foreach (double value in recentValues_horizontal)
-                            {
-                                sumOfRecentValues += value;
-                            }
-
-                            
-                            if (sumOfRecentValues * delayed_horizontal_diff < 0)
-                            {
-                                double ratio = Math.Min(Math.Abs(delayed_horizontal_diff / sumOfRecentValues), 1);
-                                delayed_horizontal_diff *= ratio;
-                            }
-
 
                             double vertical_delta_pos;
                             if (delayed_vertical_diff <= 0)
@@ -812,8 +855,12 @@ namespace WAT
                             
                             if (horizontal_gaze_pos > max_x) horizontal_gaze_pos = max_x;
                             else if (horizontal_gaze_pos < 0) horizontal_gaze_pos = 0;
+                            Console.WriteLine("vertical");
+                            Console.WriteLine(vertical_delta_pos);
+                            Console.WriteLine("horizontal");
+                            Console.WriteLine(horizontal_delta_pos);
 
-                            
+
                             vertical_gaze_pos += vertical_delta_pos;
                             horizontal_gaze_pos += horizontal_delta_pos;
 

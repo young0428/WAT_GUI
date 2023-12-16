@@ -32,10 +32,10 @@ namespace WAT
         public double second_upper_threshold;
         public double baseline_ratio = 0.2;
         public double threshold_ratio = 0.5;
-        public double second_threshold_ratio = 0.35;
+        public double second_threshold_ratio = 0.2;
         public int sampling_rate = 50;
         public double initial_value;
-        public double blink_detect_period = 0.2;
+        public double blink_detect_period = 0.15;
 
 
         public SignalProcess(double[] input)
@@ -176,7 +176,7 @@ namespace WAT
 
             int cross_upper_idx = -1;
             int cross_lower_idx = -1;
-            int detect_time_limit = (int)(this.sampling_rate * this.blink_detect_period * 0.8);
+            int detect_time_limit = (int)(this.sampling_rate * this.blink_detect_period * 1);
             int detect_timer = 99999999;
 
 
@@ -238,46 +238,46 @@ namespace WAT
                     {
                         blink_period_min = filtered_first_diff_signal[i];
                     }
-                    blink_detected = 1;
+                    
                     cross_lower_idx = i;
                     cross_lower_threshold = 1;
                     detect_timer = detect_time_limit;
                     continue;
                 }
-                if (cross_lower_threshold != 0 && filtered_first_diff_signal[i] >= lower_baseline_threshold && blink_end_index == -1)
+                //if (cross_lower_threshold != 0 && filtered_first_diff_signal[i] >= lower_baseline_threshold && blink_end_index == -1)
+                //{
+                //    cross_lower_threshold = 0;
+                //    detect_timer = 99999999;
+                //    continue;
+                //}
+                // 여기까지 blink detection
+                // 이후는 intended blink detection
+                if (cross_lower_threshold==1 && second_upper_threshold < filtered_first_diff_signal[i] && cross_second_upper_threshold != 1)
                 {
-                    Console.Write("Start idx : ");
-                    Console.Write(blink_start_index);
-                    Console.Write("  End   idx : ");
+                    
+                    Console.Write("Second upper threshold : ");
                     Console.WriteLine(i);
+                    blink_detected = 1;
+                    blink_end_index = i;
+                    cross_second_upper_threshold = 1;
                     if ((blink_period_max - blink_period_min) > (upper_threshold - lower_threshold) * 3)
                     {
                         blink_type = 2;
                     }
                     else blink_type = 1;
-                    blink_end_index = i;
-                    detect_timer = 99999999;
+                    detect_timer = (int)(detect_time_limit);
                     continue;
                 }
-                // 여기까지 blink detection
-                // 이후는 intended blink detection
-                if (blink_end_index != -1 && second_upper_threshold < filtered_first_diff_signal[i] )
+                if (blink_end_index == -1
+                    && cross_second_upper_threshold != 1
+                    && (i - cross_lower_idx) >= detect_time_limit
+                    && blink_type == 0)
                 {
-                    Console.Write("Second upper threshold : ");
+                    Console.Write("timeover : ");
                     Console.WriteLine(i);
-                    cross_second_upper_threshold = 1;
-                    continue;
+                    blink_type = 1;
                 }
-                //if (blink_end_index != -1
-                //    && cross_second_upper_threshold != 1
-                //    && (i - cross_lower_idx) >= detect_time_limit
-                //    && blink_type == 0)
-                //{
-                //    Console.Write("timeover : ");
-                //    Console.WriteLine(i);
-                //    blink_type = 1;
-                //}
-                if (blink_end_index != -1 && cross_second_upper_threshold == 1)
+                if (blink_end_index != -1 && cross_second_upper_threshold == 1 && second_upper_threshold < filtered_first_diff_signal[i])
                 { 
                     blink_end_index = i;
                 }
@@ -286,6 +286,11 @@ namespace WAT
                 {
                     Console.Write("set : ");
                     Console.WriteLine(i);
+
+                    Console.Write("start_idx : ");
+                    Console.WriteLine(blink_start_index);
+                    Console.Write("end idx : ");
+                    Console.WriteLine(blink_end_index);
 
                     Console.Write("blink_type : ");
                     Console.WriteLine(blink_type);
