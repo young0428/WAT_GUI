@@ -755,7 +755,7 @@ namespace WAT
                             //    }
                             //}
 
-                            int slice_start_idx = realtime_data_buffsize - (delay_idx + 2);
+                            int slice_start_idx = realtime_data_buffsize - (delay_idx + 10);
                             int slice_end_idx = realtime_data_buffsize - 1;
                             int wink_detected = 0;
                             int cross_threshold_flag = signal_processor.CheckCrossThreshold(
@@ -767,7 +767,7 @@ namespace WAT
                             if(cross_threshold_flag == 1)
                             {
                                 
-                                double[] sliced_diff_signal = realtime_diff_data_buffer_right_vertical.Skip(realtime_data_buffsize - (delay_idx)).ToArray();
+                                double[] sliced_diff_signal = realtime_diff_data_buffer_right_vertical.Skip(slice_start_idx).ToArray();
                                 int[] blink_detection_result = signal_processor.BlinkDetection(sliced_diff_signal, vertical_peak_max, vertical_peak_min);
                                 
                                 for (int i=slice_start_idx; i <= slice_end_idx; i++)

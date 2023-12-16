@@ -174,6 +174,7 @@ namespace WAT
             blink_end_index = -1;
 
             cross_second_upper_threshold = 0;
+            int cross_lower_base = 0;
             cross_upper_threshold = 0;
             cross_lower_threshold = 0;
             int blink_type = 0;     // 1 == unintended, 2 = intended
@@ -217,6 +218,7 @@ namespace WAT
                     blink_period_max = 0;
                     cross_lower_idx = -1;
                     detect_timer = 99999999;
+                    cross_lower_base = 0;
                     //Console.Write("base return");
 
                     //Console.WriteLine(i);
@@ -251,15 +253,16 @@ namespace WAT
                     cross_second_upper_threshold = 0;
                     continue;
                 }
-                //if (cross_lower_threshold != 0 && filtered_first_diff_signal[i] >= lower_baseline_threshold && blink_end_index == -1)
-                //{
-                //    cross_lower_threshold = 0;
-                //    detect_timer = 99999999;
-                //    continue;
-                //}
+                if (cross_lower_threshold != 0 && filtered_first_diff_signal[i] >= lower_baseline_threshold && cross_lower_base != 1)
+                {
+                    Console.WriteLine("cross lower base");
+                    detect_timer = detect_time_limit;
+                    cross_lower_base = 1;
+                    continue;
+                }
                 // 여기까지 blink detection
                 // 이후는 intended blink detection
-                if (cross_lower_threshold==1 && second_upper_threshold < filtered_first_diff_signal[i] && cross_second_upper_threshold != 1)
+                if (cross_lower_base==1 && second_upper_threshold < filtered_first_diff_signal[i] && cross_second_upper_threshold != 1)
                 {
 
                     Console.Write("Second upper threshold : ");
@@ -287,8 +290,7 @@ namespace WAT
                 if (blink_end_index != -1 && cross_second_upper_threshold == 1 && second_upper_threshold < filtered_first_diff_signal[i])
                 { 
                     blink_end_index = i;
-                    
-                    //detect_timer = 99999;
+                    detect_timer = detect_time_limit;
                 }
 
                 if (blink_detected == 1 && (blink_type != 0 || i + 1 >= len))
@@ -320,6 +322,7 @@ namespace WAT
                     blink_end_index = -1;
                     cross_second_upper_threshold = 0;
                     cross_upper_threshold = 0;
+                    cross_lower_base = 0;
                     cross_lower_threshold = 0;
                     blink_type = 0;     // 1 == unintended, 2 = intended
                     cross_upper_idx = -1;
@@ -344,6 +347,7 @@ namespace WAT
                     blink_type = 0;     // 1 == unintended, 2 = intended
                     cross_upper_idx = -1;
                     cross_lower_idx = -1;
+                    cross_lower_base = 0;
                     //Console.WriteLine("Timeout");
                 }
             }

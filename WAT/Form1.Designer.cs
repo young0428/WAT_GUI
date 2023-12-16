@@ -381,6 +381,7 @@ namespace WAT
             this.timer5 = new System.Windows.Forms.Timer(this.components);
             this.Game_Image = new System.Windows.Forms.PictureBox();
             this.Game_Panel = new System.Windows.Forms.Panel();
+            this.trackingbox = new System.Windows.Forms.PictureBox();
             this.scorelayout = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -405,7 +406,6 @@ namespace WAT
             this.gamepnt1 = new System.Windows.Forms.PictureBox();
             this.tracking_delay = new System.Windows.Forms.Timer(this.components);
             this.tracking_update_timer = new System.Windows.Forms.Timer(this.components);
-            this.trackingbox = new System.Windows.Forms.PictureBox();
             this.move_to_center_timer = new System.Windows.Forms.Timer(this.components);
             this.panel2.SuspendLayout();
             this.Tablepanel.SuspendLayout();
@@ -414,6 +414,7 @@ namespace WAT
             ((System.ComponentModel.ISupportInitialize)(this.move_black)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Game_Image)).BeginInit();
             this.Game_Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackingbox)).BeginInit();
             this.scorelayout.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -429,7 +430,6 @@ namespace WAT
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackingbox)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -1289,6 +1289,15 @@ namespace WAT
             this.Game_Panel.TabIndex = 5;
             this.Game_Panel.Visible = false;
             // 
+            // trackingbox
+            // 
+            this.trackingbox.Location = new System.Drawing.Point(425, 225);
+            this.trackingbox.Margin = new System.Windows.Forms.Padding(4);
+            this.trackingbox.Name = "trackingbox";
+            this.trackingbox.Size = new System.Drawing.Size(127, 26);
+            this.trackingbox.TabIndex = 11;
+            this.trackingbox.TabStop = false;
+            // 
             // scorelayout
             // 
             this.scorelayout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1582,17 +1591,8 @@ namespace WAT
             // 
             // tracking_update_timer
             // 
-            this.tracking_update_timer.Interval = 50;
+            this.tracking_update_timer.Interval = 200;
             this.tracking_update_timer.Tick += new System.EventHandler(this.update_TrackingPosition);
-            // 
-            // trackingbox
-            // 
-            this.trackingbox.Location = new System.Drawing.Point(425, 225);
-            this.trackingbox.Margin = new System.Windows.Forms.Padding(4);
-            this.trackingbox.Name = "trackingbox";
-            this.trackingbox.Size = new System.Drawing.Size(127, 26);
-            this.trackingbox.TabIndex = 11;
-            this.trackingbox.TabStop = false;
             // 
             // move_to_center_timer
             // 
@@ -1626,6 +1626,7 @@ namespace WAT
             ((System.ComponentModel.ISupportInitialize)(this.move_black)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Game_Image)).EndInit();
             this.Game_Panel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.trackingbox)).EndInit();
             this.scorelayout.ResumeLayout(false);
             this.scorelayout.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -1643,7 +1644,6 @@ namespace WAT
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gamepnt1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackingbox)).EndInit();
             this.ResumeLayout(false);
 
         }
